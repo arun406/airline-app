@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-booking-form',
@@ -13,37 +14,85 @@ export class BookingFormComponent implements OnInit {
   titleAlert: string = 'This field is required';
   post: any = '';
 
+
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.createForm();
-    this.setChangeValidate()
+    this.formGroup = this.createForm();
+    // this.setChangeValidate()
   }
 
   createForm() {
     let emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    this.formGroup = this.formBuilder.group({
-      'email': [null, [Validators.required, Validators.pattern(emailregex)], this.checkInUseEmail],
-      'name': [null, Validators.required],
-      'password': [null, [Validators.required, this.checkPassword]],
-      'description': [null, [Validators.required, Validators.minLength(5), Validators.maxLength(10)]],
-      'validate': ''
+    // this.formGroup = this.formBuilder.group({
+    //   'name': [null, [Validators.required, Validators.pattern(emailregex)], this.checkInUseEmail],
+    //   'type': [null, Validators.required],
+    //   'bread': [null, [Validators.required, this.checkPassword]],
+    //   'age': [null, [Validators.required, Validators.minLength(5), Validators.maxLength(10)]],
+    //   'weight': [null, []],
+    //   'validate': ''
+    // });
+
+    return this.formBuilder.group({
+      pet: this.formBuilder.group({
+        type: 'dog',
+        name: '',
+        bread: '',
+        age: this.formBuilder.group({
+          months: null,
+          years: null
+        }),
+        weight: this.formBuilder.group({
+          code: 'K',
+          value: null
+        })
+      }),
+      pieces: 1,
+      weight: null,
+      isCreateAvailable: false,
+      createType: '',
+      createWeight: null,
+      dimensions: this.formBuilder.group({
+        length: null,
+        width: null,
+        height: null,
+        unit: this.formBuilder.group({
+          unit: 'cm',
+          value: null
+        })
+      }),
+      flight: this.formBuilder.group({
+        from: this.formBuilder.group({
+          code: null,
+          name: ''
+        }),
+        to: this.formBuilder.group({
+          code: null,
+          name: ''
+        }),
+        date: '',
+        carrier: '',
+        number: '',
+        suffix: ''
+      })
     });
+
+
   }
 
-  setChangeValidate() {
-    this.formGroup.get('validate').valueChanges.subscribe(
-      (validate) => {
-        if (validate == '1') {
-          this.formGroup.get('name').setValidators([Validators.required, Validators.minLength(3)]);
-          this.titleAlert = "You need to specify at least 3 characters";
-        } else {
-          this.formGroup.get('name').setValidators(Validators.required);
-        }
-        this.formGroup.get('name').updateValueAndValidity();
-      }
-    )
-  }
+  // setChangeValidate() {
+  //   this.formGroup.get('validate').valueChanges.subscribe(
+  //     (validate) => {
+  //       if (validate == '1') {
+  //         this.formGroup.get('name').setValidators([Validators.required, Validators.minLength(3)]);
+  //         this.titleAlert = "You need to specify at least 3 characters";
+  //       } else {
+  //         this.formGroup.get('name').setValidators(Validators.required);
+  //       }
+  //       this.formGroup.get('name').updateValueAndValidity();
+  //     }
+  //   )
+  // }
 
   get name() {
     return this.formGroup.get('name') as FormControl
@@ -80,5 +129,6 @@ export class BookingFormComponent implements OnInit {
 
   onSubmit(post) {
     this.post = post;
+    console.log(this.post);
   }
 }

@@ -1,14 +1,87 @@
-<mat-toolbar color="primary">
-  <span class="fill-remaining-space">My Reactive Form with Material</span>
-</mat-toolbar>
+<div *ngIf="!post; else forminfo" novalidate>
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+    <mat-tab-group>
+      <mat-tab label="Pet Details">
+        <div formGroupName="pet" noValidate>
+          <mat-form-field>
+            <input matInput placeholder="Name" formControlName="name" />
+            <!-- <mat-error
+                              *ngIf="
+                                !formGroup.controls['name'].valid &&
+                                formGroup.controls['name'].touched
+                              "
+                            >
+                              {{ getErrorEmail() }}
+                            </mat-error> -->
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Bread" formControlName="bread" />
+          </mat-form-field>
+          <div formGroupName="age" noValidate>
+            <mat-form-field>
+              <mat-label>Age</mat-label>
+              <input matInput formControlName="years" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput formControlName="months" />
+            </mat-form-field>
+          </div>
+          <div formGroupName="weight" noValidate>
+            <mat-form-field>
+              <input matInput placeholder="Weight" formControlName="value" />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select formControlName="code">
+                <mat-option value="K">Kgs</mat-option>
+                <mat-option value="L">Lbs</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+    <mat-tab-group>
+      <mat-tab label="Create Details">
+        <div formGroupName="dimensions" noValidate></div>
+      </mat-tab>
+    </mat-tab-group>
 
-<div class="container" *ngIf="!post; else forminfo" novalidate>
-  <form
-    [formGroup]="formGroup"
-    (ngSubmit)="onSubmit(formGroup.value)"
-    class="form"
-  >
-    <mat-form-field class="form-element">
+    <mat-tab-group>
+      <mat-tab label="Flight Details">
+        <div formGroupName="flight" noValidate>
+          <div>
+            <mat-form-field>
+              <input matInput formControlName="carrier" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput formControlName="number" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput formControlName="suffix" />
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <input matInput formControlName="date" />
+            </mat-form-field>
+          </div>
+          <div>
+            <div formGroupName="from" noValidate>
+              <mat-form-field>
+                <input matInput formControlName="code" />
+              </mat-form-field>
+            </div>
+            <div formGroupName="to" noValidate>
+              <mat-form-field>
+                <input matInput formControlName="code" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+    <!-- <mat-form-field>
       <input matInput placeholder="Emailaddress" formControlName="email" />
       <mat-error
         *ngIf="
@@ -20,14 +93,14 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="form-element">
+    <mat-form-field>
       <input matInput placeholder="Name" formControlName="name" />
       <mat-error *ngIf="!name.valid && name.touched">
         {{ titleAlert }}
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="form-element">
+    <mat-form-field>
       <textarea
         matInput
         placeholder="Description"
@@ -46,7 +119,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="form-element">
+    <mat-form-field>
       <input matInput placeholder="Password" formControlName="password" />
       <mat-hint
         >Choose a password of at least eight characters, one uppercase letter
@@ -62,13 +135,13 @@
       </mat-error>
     </mat-form-field>
 
-    <div class="form-element">
+    <div>
       <mat-checkbox formControlName="validate" value="1"
         >Name min. 3 characters</mat-checkbox
       >
-    </div>
+    </div> -->
 
-    <div class="form-element">
+    <div>
       <button
         mat-raised-button
         color="primary"
@@ -83,7 +156,7 @@
 </div>
 
 <ng-template #forminfo>
-  <div class="container">
-    {{ post | json }}
+  <div>
+    {{ post }}
   </div>
 </ng-template>
