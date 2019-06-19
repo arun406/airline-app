@@ -1,8 +1,10 @@
+
+import { BookingService } from './../booking.service';
 import { PnrService } from './../pnr.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Booking, Flight, Airport } from 'src/booking-request';
+import { Booking, Flight, Airport } from './../booking-request';
 
 @Component({
   selector: 'app-booking-form',
@@ -20,7 +22,7 @@ export class BookingFormComponent implements OnInit {
   pnr: string = '';
   booking: Booking;
 
-  constructor(private formBuilder: FormBuilder, private pnrService: PnrService
+  constructor(private formBuilder: FormBuilder, private pnrService: PnrService, private bookingService: BookingService
   ) { }
 
   ngOnInit() {
@@ -176,6 +178,7 @@ export class BookingFormComponent implements OnInit {
   onSubmit(post) {
     this.booking = post;
     console.log(this.booking);
+    this.bookingService.createBooking(this.booking);
   }
 
   getPNR() {

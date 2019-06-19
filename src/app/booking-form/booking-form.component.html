@@ -11,7 +11,7 @@
       >
       <input type="text" [(ngModel)]="pnr" />
       <button mat-raised-button color="primary" (click)="getPNR()">
-        GET
+        Fetch Reservation
       </button>
     </mat-card-content>
   </mat-card>
@@ -175,6 +175,6 @@
 
 <ng-template #forminfo>
   <div>
-    {{ post }}
+    {{ booking | json }}
   </div>
 </ng-template>

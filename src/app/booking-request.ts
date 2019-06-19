@@ -7,12 +7,8 @@ export class Booking {
     createWeight: string;
     dimensions: Dimension;
     public flight: Flight;
-    getFlight() {
-        return this.flight;
-    }
-    setFlight(flight) {
-        this.flight = flight;
-    }
+    shipper: string;
+    consignee: string;
 }
 export class Pet {
     type: string;
