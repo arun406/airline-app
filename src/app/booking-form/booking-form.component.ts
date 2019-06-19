@@ -1,7 +1,8 @@
+import { PnrService } from './../pnr.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { stringify } from 'querystring';
+import { Booking, Flight, Airport } from 'src/booking-request';
 
 @Component({
   selector: 'app-booking-form',
@@ -10,15 +11,60 @@ import { stringify } from 'querystring';
 })
 export class BookingFormComponent implements OnInit {
 
+  checked = false;
+  indeterminate = false;
+  labelPosition = 'after';
+  disabled = false;
   formGroup: FormGroup;
   titleAlert: string = 'This field is required';
-  post: any = '';
+  pnr: string = '';
+  booking: Booking;
 
-
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private pnrService: PnrService
+  ) { }
 
   ngOnInit() {
+    this.booking = new Booking();
+    this.booking.flight = new Flight();
+    this.booking.flight.to = new Airport();
+    this.booking.flight.from = new Airport();
+
     this.formGroup = this.createForm();
+    this.pnrService.getPNRDetails('ord_00009jw0z8RxG5zDHtwofB').subscribe((response: any) => {
+      console.log(response.data);
+      const slice = response.data.slices[0];
+      this.booking.flight.to.code = slice.destination.iata_code;
+      this.booking.flight.to.name = slice.destination.name;
+      this.booking.flight.from.code = slice.origin.iata_code;
+      this.booking.flight.from.name = slice.origin.name;
+
+      const segment = slice.segments[0];
+      this.booking.flight.carrier = segment.marketing_carrier.iata_code;
+      this.booking.flight.number = segment.marketing_carrier_flight_number;
+      this.booking.flight.date = segment.departure_datetime;
+
+      console.log(this.booking);
+      this.formGroup.patchValue({
+        flight: {
+          from: {
+            code: this.booking.flight.from.code,
+            name: this.booking.flight.from.name
+          },
+          to: {
+            code: this.booking.flight.to.code,
+            name: this.booking.flight.to.name
+          },
+          date: this.booking.flight.date,
+          carrier: this.booking.flight.carrier,
+          number: this.booking.flight.number,
+          suffix: this.booking.flight.suffix
+        }
+      });
+    });
+
+
+
+    console.log(this.formGroup.value);
     // this.setChangeValidate()
   }
 
@@ -128,7 +174,11 @@ export class BookingFormComponent implements OnInit {
   }
 
   onSubmit(post) {
-    this.post = post;
-    console.log(this.post);
+    this.booking = post;
+    console.log(this.booking);
+  }
+
+  getPNR() {
+    console.log(this.pnr);
   }
 }

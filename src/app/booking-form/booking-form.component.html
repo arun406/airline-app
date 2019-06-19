@@ -1,85 +1,103 @@
 <div *ngIf="!post; else forminfo" novalidate>
+  <mat-card>
+    <mat-card-content>
+      Are the Pets travelling with you?
+      <mat-radio-group aria-label="Select an option">
+        <mat-radio-button value="Y">Yes</mat-radio-button>
+        <mat-radio-button value="N">No</mat-radio-button>
+      </mat-radio-group>
+      <mat-label
+        >Reservation Number of your Passenger Ticket (Optional)</mat-label
+      >
+      <input type="text" [(ngModel)]="pnr" />
+      <button mat-raised-button color="primary" (click)="getPNR()">
+        GET
+      </button>
+    </mat-card-content>
+  </mat-card>
   <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
-    <mat-tab-group>
-      <mat-tab label="Pet Details">
-        <div formGroupName="pet" noValidate>
-          <mat-form-field>
-            <input matInput placeholder="Name" formControlName="name" />
-            <!-- <mat-error
-                              *ngIf="
-                                !formGroup.controls['name'].valid &&
-                                formGroup.controls['name'].touched
-                              "
-                            >
-                              {{ getErrorEmail() }}
-                            </mat-error> -->
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Bread" formControlName="bread" />
-          </mat-form-field>
-          <div formGroupName="age" noValidate>
-            <mat-form-field>
-              <mat-label>Age</mat-label>
-              <input matInput formControlName="years" />
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput formControlName="months" />
-            </mat-form-field>
+    <div>
+      <mat-tab-group>
+        <mat-tab label="Flight Details">
+          <div formGroupName="flight" noValidate>
+            <div>
+              <mat-form-field>
+                <input
+                  matInput
+                  platholder="carrier"
+                  formControlName="carrier"
+                />
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="number" formControlName="number" />
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="suffix" formControlName="suffix" />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <input matInput placeholder="date" formControlName="date" />
+              </mat-form-field>
+            </div>
+            <div>
+              <div formGroupName="from" noValidate>
+                <mat-form-field>
+                  <input matInput placeholder="From" formControlName="code" />
+                </mat-form-field>
+              </div>
+              <div formGroupName="to" noValidate>
+                <mat-form-field>
+                  <input matInput placeholder="To" formControlName="code" />
+                </mat-form-field>
+              </div>
+            </div>
           </div>
-          <div formGroupName="weight" noValidate>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+    <div>
+      <mat-tab-group>
+        <mat-tab label="Pet Details">
+          <div formGroupName="pet" noValidate>
             <mat-form-field>
-              <input matInput placeholder="Weight" formControlName="value" />
+              <input matInput placeholder="Name" formControlName="name" />
             </mat-form-field>
             <mat-form-field>
-              <mat-select formControlName="code">
-                <mat-option value="K">Kgs</mat-option>
-                <mat-option value="L">Lbs</mat-option>
-              </mat-select>
+              <input matInput placeholder="Bread" formControlName="bread" />
             </mat-form-field>
-          </div>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
-    <mat-tab-group>
-      <mat-tab label="Create Details">
-        <div formGroupName="dimensions" noValidate></div>
-      </mat-tab>
-    </mat-tab-group>
+            <div formGroupName="age" noValidate>
+              <mat-form-field>
+                <input matInput placeholder="Yrs" formControlName="years" />
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="months" formControlName="months" />
+              </mat-form-field>
+            </div>
 
-    <mat-tab-group>
-      <mat-tab label="Flight Details">
-        <div formGroupName="flight" noValidate>
-          <div>
-            <mat-form-field>
-              <input matInput formControlName="carrier" />
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput formControlName="number" />
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput formControlName="suffix" />
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field>
-              <input matInput formControlName="date" />
-            </mat-form-field>
-          </div>
-          <div>
-            <div formGroupName="from" noValidate>
+            <div formGroupName="weight" noValidate>
               <mat-form-field>
-                <input matInput formControlName="code" />
+                <mat-label>Weight</mat-label>
+                <input matInput formControlName="value" />
               </mat-form-field>
-            </div>
-            <div formGroupName="to" noValidate>
               <mat-form-field>
-                <input matInput formControlName="code" />
+                <mat-select formControlName="code">
+                  <mat-option value="K">Kgs</mat-option>
+                  <mat-option value="L">Lbs</mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
           </div>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+    <div>
+      <mat-tab-group>
+        <mat-tab label="Create Details">
+          <div formGroupName="dimensions" noValidate></div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
 
     <!-- <mat-form-field>
       <input matInput placeholder="Emailaddress" formControlName="email" />
@@ -92,8 +110,8 @@
         {{ getErrorEmail() }}
       </mat-error>
     </mat-form-field>
-
-    <mat-form-field>
+  -->
+    <!-- <mat-form-field>
       <input matInput placeholder="Name" formControlName="name" />
       <mat-error *ngIf="!name.valid && name.touched">
         {{ titleAlert }}
@@ -139,7 +157,7 @@
       <mat-checkbox formControlName="validate" value="1"
         >Name min. 3 characters</mat-checkbox
       >
-    </div> -->
+    </div>  -->
 
     <div>
       <button
@@ -149,7 +167,7 @@
         class="button"
         [disabled]="!formGroup.valid"
       >
-        Submit Form
+        Request Booking
       </button>
     </div>
   </form>

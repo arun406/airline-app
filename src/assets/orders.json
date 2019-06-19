@@ -1,0 +1,223 @@
+{
+  "data": {
+    "base_amount": "1576.00",
+    "base_currency": "GBP",
+    "booking_reference": "CQPVSE",
+    "cancelled_at": null,
+    "created_at": "2019-06-17T10:21:21.489681Z",
+    "id": "ord_00009jw0z8RxG5zDHtwofB",
+    "live_mode": false,
+    "owner": {
+      "iata_code": "AA",
+      "id": "arl_00009VME7DAGiJjwomhv32",
+      "name": "American Airlines"
+    },
+    "slices": [
+      {
+        "destination": {
+          "city": {
+            "iata_city_code": "NYC",
+            "iata_code": "NYC",
+            "iata_country_code": "US",
+            "id": "cit_nyc_us",
+            "name": "New York",
+            "type": "city"
+          },
+          "iata_city_code": "NYC",
+          "iata_code": "JFK",
+          "iata_country_code": "US",
+          "id": "arp_jfk_us",
+          "name": "John F Kennedy Intl",
+          "type": "airport"
+        },
+        "duration": null,
+        "origin": {
+          "city": {
+            "iata_city_code": "LON",
+            "iata_code": "LON",
+            "iata_country_code": "GB",
+            "id": "cit_lon_gb",
+            "name": "London",
+            "type": "city"
+          },
+          "iata_city_code": "LON",
+          "iata_code": "LHR",
+          "iata_country_code": "GB",
+          "id": "arp_lhr_gb",
+          "name": "Heathrow",
+          "type": "airport"
+        },
+        "segments": [
+          {
+            "aircraft": {
+              "iata_code": "777",
+              "id": "arc_00009VMF8AhXSSRnQDI6HF",
+              "name": "Boeing 777"
+            },
+            "arrival_datetime": "2019-07-08T19:15:00",
+            "arrival_terminal": "7",
+            "departure_datetime": "2019-07-08T16:15:00",
+            "departure_terminal": "5",
+            "destination": {
+              "city": {
+                "iata_city_code": "NYC",
+                "iata_code": "NYC",
+                "iata_country_code": "US",
+                "id": "cit_nyc_us",
+                "name": "New York",
+                "type": "city"
+              },
+              "iata_city_code": "NYC",
+              "iata_code": "JFK",
+              "iata_country_code": "US",
+              "id": "arp_jfk_us",
+              "name": "John F Kennedy Intl",
+              "type": "airport"
+            },
+            "distance": null,
+            "duration": "PT8H0M",
+            "marketing_carrier": {
+              "iata_code": "AA",
+              "id": "arl_00009VME7DAGiJjwomhv32",
+              "name": "American Airlines"
+            },
+            "marketing_carrier_flight_number": "6134",
+            "operating_carrier": {
+              "iata_code": "BA",
+              "id": "arl_00009VME7DBKeMags5CliQ",
+              "name": "British Airways"
+            },
+            "operating_carrier_flight_number": "0113",
+            "origin": {
+              "city": {
+                "iata_city_code": "LON",
+                "iata_code": "LON",
+                "iata_country_code": "GB",
+                "id": "cit_lon_gb",
+                "name": "London",
+                "type": "city"
+              },
+              "iata_city_code": "LON",
+              "iata_code": "LHR",
+              "iata_country_code": "GB",
+              "id": "arp_lhr_gb",
+              "name": "Heathrow",
+              "type": "airport"
+            },
+            "passengers": [
+              {
+                "a3_is_refundable": null,
+                "baggages": [
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 1,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 1,
+                    "type": "carry_on"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 1,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 1,
+                    "type": "carry_on"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 1,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  },
+                  {
+                    "quantity": 2,
+                    "type": "checked"
+                  }
+                ],
+                "cabin_class": "premium_economy",
+                "cabin_class_marketing_name": "Premium",
+                "passenger_id": "pas_00009jw0vGSLY7hCxarCCm"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "tax_amount": "346.42",
+    "tax_currency": "GBP",
+    "ticket_by": "2019-07-05T23:59:00.000000Z",
+    "total_amount": "1922.42",
+    "total_currency": "GBP"
+  }
+}

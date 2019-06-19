@@ -6,7 +6,13 @@ export class Booking {
     createType: string;
     createWeight: string;
     dimensions: Dimension;
-    flight: Flight;
+    public flight: Flight;
+    getFlight() {
+        return this.flight;
+    }
+    setFlight(flight) {
+        this.flight = flight;
+    }
 }
 export class Pet {
     type: string;
@@ -32,7 +38,7 @@ export class Dimension {
 export class Flight {
     from: Airport;
     to: Airport;
-    date: Date;
+    date: string;
     carrier: string;
     number: string;
     suffix: string;
