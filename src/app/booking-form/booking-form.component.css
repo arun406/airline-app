@@ -1,6 +1,92 @@
-mat-form-field {
-  margin-right: 12px;
+.example-full-width {
+  width: 80%;
+  margin-left: 20px;
+  margin-right: 20px;
 }
-.mat-radio-button ~ .mat-radio-button {
-  margin-left: 16px;
+.age-weight {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.reservation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  margin-top: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+.card {
+  margin-left: 20px;
+  /* width: 300px; */
+  /* height: 250px; */
+}
+.image-card {
+  margin-right: 20px;
+  width: 350px;
+}
+.flight-card {
+  border-radius: 1px;
+}
+.image-holder {
+  height: 200px;
+  max-height: 150px;
+  align-content: center;
+}
+
+.flight-header {
+  background: #002244;
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  /* margin-top: 10px; */
+  /* padding-left: 10px; */
+}
+.flight-number {
+  font-size: 20px;
+  color: #0b1d58;
+  /* padding-left: px; */
+  /* color: chocolate; */
+}
+.od {
+  display: flex;
+  justify-content: space-between;
+
+  font-weight: bold;
+  padding-left: 10px;
+  color: #003399;
+}
+.pet-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.services-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.section {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carrier {
+  background-image: url("/assets/AA.PNG");
 }

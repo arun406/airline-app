@@ -4,7 +4,14 @@ import { PnrService } from './../pnr.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Booking, Flight, Airport } from './../booking-request';
+import { Booking, Flight, Airport, Pet } from './../booking-request';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
+export interface Create {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-booking-form',
@@ -13,79 +20,44 @@ import { Booking, Flight, Airport } from './../booking-request';
 })
 export class BookingFormComponent implements OnInit {
 
-  checked = false;
-  indeterminate = false;
-  labelPosition = 'after';
-  disabled = false;
-  formGroup: FormGroup;
-  titleAlert: string = 'This field is required';
-  pnr: string = '';
-  booking: Booking;
+  IMAGE_UPLOAD_URL: string = "http://localhost:8080/bread";
 
-  constructor(private formBuilder: FormBuilder, private pnrService: PnrService, private bookingService: BookingService
+  formGroup: FormGroup;
+  pnr: string = '';
+  name: string = '';
+  email: string = '';
+  phone: string = '';
+  enableSpinner = false;
+  spinnermode = 'indeterminate';
+
+  booking: Booking;
+  createTypes: Create[] = [
+    { value: '100 Series', viewValue: '30 (L) x 70 (W) x 30 (H) cm' },
+    { value: '200 Series', viewValue: '30 (L) x 70 (W) x 30 (H) cm' },
+    { value: '300 Series', viewValue: '30 (L) x 70 (W) x 30 (H) cm' },
+    { value: '400 Series', viewValue: '30 (L) x 70 (W) x 30 (H) cm' },
+    { value: '500 Series', viewValue: '30 (L) x 70 (W) x 30 (H) cm' },
+    { value: '600 Series', viewValue: '30 (L) x 70 (W) x 30 (H) cm' }
+  ];
+  constructor(private httpClient: HttpClient, private router: Router, private formBuilder: FormBuilder, private pnrService: PnrService, private bookingService: BookingService
   ) { }
 
   ngOnInit() {
     this.booking = new Booking();
-    this.booking.flight = new Flight();
-    this.booking.flight.to = new Airport();
-    this.booking.flight.from = new Airport();
-
+    this.booking.Flight = new Flight();
+    this.booking.Flight.to = new Airport();
+    this.booking.Flight.from = new Airport();
+    this.booking.Pet = new Pet();
     this.formGroup = this.createForm();
-    this.pnrService.getPNRDetails('ord_00009jw0z8RxG5zDHtwofB').subscribe((response: any) => {
-      console.log(response.data);
-      const slice = response.data.slices[0];
-      this.booking.flight.to.code = slice.destination.iata_code;
-      this.booking.flight.to.name = slice.destination.name;
-      this.booking.flight.from.code = slice.origin.iata_code;
-      this.booking.flight.from.name = slice.origin.name;
-
-      const segment = slice.segments[0];
-      this.booking.flight.carrier = segment.marketing_carrier.iata_code;
-      this.booking.flight.number = segment.marketing_carrier_flight_number;
-      this.booking.flight.date = segment.departure_datetime;
-
-      console.log(this.booking);
-      this.formGroup.patchValue({
-        flight: {
-          from: {
-            code: this.booking.flight.from.code,
-            name: this.booking.flight.from.name
-          },
-          to: {
-            code: this.booking.flight.to.code,
-            name: this.booking.flight.to.name
-          },
-          date: this.booking.flight.date,
-          carrier: this.booking.flight.carrier,
-          number: this.booking.flight.number,
-          suffix: this.booking.flight.suffix
-        }
-      });
-    });
-
-
-
-    console.log(this.formGroup.value);
-    // this.setChangeValidate()
   }
 
   createForm() {
-    let emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    // this.formGroup = this.formBuilder.group({
-    //   'name': [null, [Validators.required, Validators.pattern(emailregex)], this.checkInUseEmail],
-    //   'type': [null, Validators.required],
-    //   'bread': [null, [Validators.required, this.checkPassword]],
-    //   'age': [null, [Validators.required, Validators.minLength(5), Validators.maxLength(10)]],
-    //   'weight': [null, []],
-    //   'validate': ''
-    // });
-
     return this.formBuilder.group({
-      pet: this.formBuilder.group({
-        type: 'dog',
+      attachment: '',
+      Pet: this.formBuilder.group({
+        type: 'Dog',
         name: '',
-        bread: '',
+        breed: '',
         age: this.formBuilder.group({
           months: null,
           years: null
@@ -95,12 +67,12 @@ export class BookingFormComponent implements OnInit {
           value: null
         })
       }),
-      pieces: 1,
-      weight: null,
-      isCreateAvailable: false,
-      createType: '',
-      createWeight: null,
-      dimensions: this.formBuilder.group({
+      Pieces: 1,
+      Weight: null,
+      IsCreateAvailable: false,
+      CreateType: '',
+      CreateWeight: null,
+      Dimensions: this.formBuilder.group({
         length: null,
         width: null,
         height: null,
@@ -109,7 +81,7 @@ export class BookingFormComponent implements OnInit {
           value: null
         })
       }),
-      flight: this.formBuilder.group({
+      Flight: this.formBuilder.group({
         from: this.formBuilder.group({
           code: null,
           name: ''
@@ -122,66 +94,123 @@ export class BookingFormComponent implements OnInit {
         carrier: '',
         number: '',
         suffix: ''
+      }),
+      Services: this.formBuilder.group({
+        feeding: true,
+        insurance: true,
+        temperature: true
       })
     });
-
-
   }
-
-  // setChangeValidate() {
-  //   this.formGroup.get('validate').valueChanges.subscribe(
-  //     (validate) => {
-  //       if (validate == '1') {
-  //         this.formGroup.get('name').setValidators([Validators.required, Validators.minLength(3)]);
-  //         this.titleAlert = "You need to specify at least 3 characters";
-  //       } else {
-  //         this.formGroup.get('name').setValidators(Validators.required);
-  //       }
-  //       this.formGroup.get('name').updateValueAndValidity();
-  //     }
-  //   )
-  // }
-
-  get name() {
-    return this.formGroup.get('name') as FormControl
-  }
-
-  checkPassword(control) {
-    let enteredPassword = control.value
-    let passwordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
-    return (!passwordCheck.test(enteredPassword) && enteredPassword) ? { 'requirements': true } : null;
-  }
-
-  checkInUseEmail(control) {
-    // mimic http database access
-    let db = ['tony@gmail.com'];
-    return new Observable(observer => {
-      setTimeout(() => {
-        let result = (db.indexOf(control.value) !== -1) ? { 'alreadyInUse': true } : null;
-        observer.next(result);
-        observer.complete();
-      }, 4000)
-    })
-  }
-
-  getErrorEmail() {
-    return this.formGroup.get('email').hasError('required') ? 'Field is required' :
-      this.formGroup.get('email').hasError('pattern') ? 'Not a valid emailaddress' :
-        this.formGroup.get('email').hasError('alreadyInUse') ? 'This emailaddress is already in use' : '';
-  }
-
-  getErrorPassword() {
-    return this.formGroup.get('password').hasError('required') ? 'Field is required (at least eight characters, one uppercase letter and one number)' :
-      this.formGroup.get('password').hasError('requirements') ? 'Password needs to be at least eight characters, one uppercase letter and one number' : '';
-  }
-
   onSubmit(post) {
+
+
     this.booking = post;
-    console.log(this.booking);
-    this.bookingService.createBooking(this.booking);
+    this.booking['@type'] = 'AirwayBill';
+    this.booking['@id'] = undefined;
+    this.booking['Url'] = undefined;
+    this.booking['AirwayBillNumber'] = '901-1211212';
+    this.booking['Date'] = new Date().toISOString
+    // this.booking['ProductCode'] = 'GCR';
+    // this.booking['ServiceCode'] = 'A';
+    // this.booking['OriginDestination'] = 'LHR-JFK';
+    this.booking['Shipper'] = 'Mr. Hellen Petri';
+    this.booking['Consignee'] = 'Mr. Hellen Petri';
+    // this.booking['TotalPieceCount'] = 1;
+    // this.booking['ToatalULDCount'] = 1;
+    // this.booking['TotalNetWeight'] = { value: 12, unit: 'K' };
+    // this.booking['TotalTareWeight'] = { value: 15, unit: 'K' };;
+    // this.booking['TotalGrossWet'] = { value: 15, unit: 'K' };
+    // this.booking['TotalVolue'] = 0.5;
+    // this.booking['TotalChargeAmount'] = { value: 100, unit: 'EUR' };
+    // this.booking['attachment'] = undefined;
+    // this.booking['pet'] = undefined;
+    // this.booking['flight'] = undefined;
+    this.booking.Pet.name = this.name;
+
+
+    const formData = new FormData();
+    formData.append('file', this.formGroup.get('attachment').value);
+    formData.append('lo', JSON.stringify(this.booking));
+
+    this.httpClient.post<any>("http://localhost:8080/companies/finnair/los", formData).subscribe(
+      (res) => {
+        console.log(res.loId);
+        const loId = res.loId;
+        this.router.navigate(['success', loId]);
+      },
+      (err) => console.log(err)
+    );
   }
 
-  getPNR() {
-    console.log(this.pnr);
+  public fetchReservation(breed: string) {
+    this.booking.Pet.breed = breed;
+    console.log('Breed : ' + this.booking.Pet.breed);
+    this.pnrService.getPNRDetails('ord_00009jw0z8RxG5zDHtwofB').subscribe((response: any) => {
+      console.log('Success')
+      console.log(response.data);
+      this.setValuesToForm(response.data, breed);
+    }, (error) => { console.log(error) });
+  }
+
+  public setValuesToForm(data, breed) {
+    const slice = data.slices[0];
+    this.booking.Flight.to.code = slice.destination.iata_code;
+    this.booking.Flight.to.name = slice.destination.name;
+    this.booking.Flight.from.code = slice.origin.iata_code;
+    this.booking.Flight.from.name = slice.origin.name;
+
+    const segment = slice.segments[0];
+    this.booking.Flight.carrier = segment.marketing_carrier.iata_code;
+    this.booking.Flight.number = segment.marketing_carrier_flight_number;
+    this.booking.Flight.date = new Date(segment.departure_datetime);
+
+    this.formGroup.patchValue({
+      flight: {
+        from: {
+          code: this.booking.Flight.from.code,
+          name: this.booking.Flight.from.name
+        },
+        to: {
+          code: this.booking.Flight.to.code,
+          name: this.booking.Flight.to.name
+        },
+        date: this.booking.Flight.date,
+        carrier: this.booking.Flight.carrier,
+        number: this.booking.Flight.number,
+        suffix: this.booking.Flight.suffix
+      },
+      pet: {
+        breed: this.booking.Pet.breed,
+        name: this.name
+      }
+    });
+  }
+  selectedFile: File;
+  url: string;
+
+  onFileSelected(event) {
+    if (event.target.files.length > 0) {
+      this.booking.Pet.breed = undefined;
+      this.selectedFile = event.target.files[0];
+      this.formGroup.get('attachment').setValue(this.selectedFile);
+      this.enableSpinner = true;
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+      reader.onload = (event: any) => { // called once readAsDataURL is completed
+        this.url = event.target.result;
+      }
+      var breed;
+      this.pnrService.getBreed(this.IMAGE_UPLOAD_URL, this.selectedFile).subscribe(
+        (response) => {
+          console.log(response);
+          breed = JSON.parse(JSON.stringify(response)).bread;
+          console.log('Breed :::: ' + breed);
+          this.fetchReservation(breed);
+        },
+        (error) => { console.log(error); });
+
+
+    }
   }
 }

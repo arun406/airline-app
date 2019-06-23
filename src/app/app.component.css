@@ -3,3 +3,8 @@ Copyright Google LLC. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that
 can be found in the LICENSE file at http://angular.io/license
 */
+.main-container {
+  margin: 25px 00px 0 00px;
+  padding: 20px 50px 100px 50px;
+  height: 100vh;
+}

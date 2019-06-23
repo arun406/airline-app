@@ -20,4 +20,13 @@ export class PnrService {
     headers.append("Access-Control-Request-Method", "*");
     return this.httpClient.get(this.local);
   }
+
+  getBreed(url: string, selectedFile: File) {
+    var breed;
+    const uploadData = new FormData();
+    uploadData.append('file', selectedFile, selectedFile.name);
+    return this.httpClient.post(url, uploadData)
+
+
+  }
 }

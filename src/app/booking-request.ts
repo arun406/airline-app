@@ -1,19 +1,20 @@
 export class Booking {
-    pet: Pet;
-    pieces: number = 1;
-    weight: Unit;
-    isCreatAvailable: boolean;
-    createType: string;
-    createWeight: string;
-    dimensions: Dimension;
-    public flight: Flight;
-    shipper: string;
-    consignee: string;
+    Pet: Pet;
+    Pieces: number = 1;
+    Weight: Unit;
+    IsCreatAvailable: boolean;
+    CreateType: string;
+    CreateWeight: string;
+    Dimensions: Dimension;
+    public Flight: Flight;
+    Shipper: string;
+    Consignee: string;
+    DocumentList: string[]
 }
 export class Pet {
     type: string;
     name: string;
-    bread: string;
+    breed: string;
     age: Age;
     weight: Unit;
 }
@@ -34,7 +35,7 @@ export class Dimension {
 export class Flight {
     from: Airport;
     to: Airport;
-    date: string;
+    date: Date;
     carrier: string;
     number: string;
     suffix: string;

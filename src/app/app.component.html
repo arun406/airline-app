@@ -1,25 +1,9 @@
 <app-top-bar></app-top-bar>
-
-<div class="app-container">
-  <div>
-    <h2>PetSafe</h2>
-    <p>
-      PetSafe® is our specially designed program for transporting animals that
-      are not eligible to travel in the aircraft cabin. PetSafe offers
-      airport-to-airport travel for animals traveling to nearly 300
-      destinations, and members of our PetSafe team are trained professionals
-      who love animals and are dedicated to ensuring that all pets receive the
-      best care throughout their entire journey. Read More
-    </p>
-  </div>
-  <div>
-    <h4>View My PetSafe Booking</h4>
-    <mat-label>Airway Bill Number</mat-label>
-    <input matInput />
-  </div>
-  <button mat-raised-button color="primary">View</button>
-  <router-outlet></router-outlet>
-</div>
+<mat-card class="main-container">
+  <mat-card-content>
+    <router-outlet></router-outlet>
+  </mat-card-content>
+</mat-card>
 
 <!-- 
 Copyright Google LLC. All Rights Reserved.

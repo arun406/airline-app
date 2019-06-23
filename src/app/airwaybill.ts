@@ -1,23 +1,23 @@
-export interface Context {
+export class Context {
     vocab: string;
 }
 
-export interface Carriage {
+export class Carriage {
     NoCarriageValue: string;
     Amount: string;
 }
 
-export interface Customs {
+export class Customs {
     NoCustomsValue: string;
     Amount: string;
 }
 
-export interface Insurance {
+export class Insurance {
     NoInsuranceValue: string;
     Amount: string;
 }
 
-export interface ChargeDeclaration {
+export class ChargeDeclaration {
     WeightValuationChargePaymen: string;
     OtherChargesPayment: string;
     Carriage: Carriage;
@@ -25,19 +25,19 @@ export interface ChargeDeclaration {
     Insurance: Insurance;
 }
 
-export interface ChargeDescription {
+export class ChargeDescription {
     Code: string;
     SubCode: string;
     Description: string;
     LocationIndicator: string;
 }
 
-export interface SpecialService {
+export class SpecialService {
     Description: string;
     DateTime: string;
 }
 
-export interface ChargePayment {
+export class ChargePayment {
     ByTime: string;
     ByItemQuantity: string;
     Amount: string;
@@ -45,13 +45,13 @@ export interface ChargePayment {
     PrepaidCollectIndicator: string;
 }
 
-export interface OtherCharge {
+export class OtherCharge {
     ChargeDescription: ChargeDescription;
     SpecialService: SpecialService;
     ChargePayment: ChargePayment;
 }
 
-export interface Prepaid {
+export class Prepaid {
     TotalWeightCharges: string;
     TotalValuationCharges: string;
     TotalTaxes: string;
@@ -60,13 +60,13 @@ export interface Prepaid {
     TotalPrepaidCharges: string;
 }
 
-export interface InDestinationCurrency {
+export class InDestinationCurrency {
     TotalCharges: string;
     CollectionCharge: string;
     GrandTotalCollectCharges: string;
 }
 
-export interface Collect {
+export class Collect {
     TotalWeightCharges: string;
     TotalValuationCharges: string;
     TotalTaxes: string;
@@ -76,12 +76,12 @@ export interface Collect {
     InDestinationCurrency: InDestinationCurrency;
 }
 
-export interface ChargeSummary {
+export class ChargeSummary {
     Prepaid: Prepaid;
     Collect: Collect;
 }
 
-export interface ShipperSignature {
+export class ShipperSignature {
     SignatoryName: string;
     SignatoryCompany: string;
     Date: string;
@@ -89,7 +89,7 @@ export interface ShipperSignature {
     Location: string;
 }
 
-export interface CarrierSignature {
+export class CarrierSignature {
     SignatoryName: string;
     SignatoryCompany: string;
     Date: string;
@@ -97,7 +97,7 @@ export interface CarrierSignature {
     Location: string;
 }
 
-export interface AirwayBill {
+export class AirwayBill {
     context: Context;
     id?: any;
     type: string;
@@ -125,20 +125,20 @@ export interface AirwayBill {
     Handling: string;
     CustomsInformation: string;
     SecurityInformation: string;
-    Insurance: string;
+    Insurance: number;
     ChargeDeclaration: ChargeDeclaration;
     OtherCharge: OtherCharge[];
     ChargeSummary: ChargeSummary;
     ShipperSignature: ShipperSignature;
     CarrierSignature: CarrierSignature;
-    TotalPieceCount: string;
-    TotalSLAC: string;
-    TotalULDCount: string;
-    TotalNetWeight: string;
-    TotalTareWeight: string;
-    TotalGrossWeight: string;
-    TotalChargeableWeight: string;
-    TotalVolume: string;
-    TotalChargeAmount: string;
+    TotalPieceCount: number;
+    TotalSLAC: number;
+    TotalULDCount: number;
+    TotalNetWeight: number;
+    TotalTareWeight: number;
+    TotalGrossWeight: number;
+    TotalChargeableWeight: number;
+    TotalVolume: number;
+    TotalChargeAmount: number;
 }
 

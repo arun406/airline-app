@@ -8,11 +8,17 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from './material.module';
 
 import { AppComponent } from "./app.component";
-import { ProductListComponent } from "./product-list/product-list.component";
 import { TopBarComponent } from "./top-bar/top-bar.component";
 import { BookingFormComponent } from './booking-form/booking-form.component';
+import { TrackingPageComponent } from './tracking-page/tracking-page.component';
+import { GhaUpdatePageComponent } from './gha-update-page/gha-update-page.component';
+import { SuccessPageComponent } from './success-page/success-page.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
-
+library.add(fas);
 
 @NgModule({
   imports: [
@@ -22,15 +28,24 @@ import { BookingFormComponent } from './booking-form/booking-form.component';
     FormsModule,
     BrowserAnimationsModule,
     MaterialModule,
+    AngularFontAwesomeModule,
+    FontAwesomeModule,
     RouterModule.forRoot([
-      { path: "", component: BookingFormComponent }
+      { path: "", component: BookingFormComponent },
+      { path: "success/:id", component: SuccessPageComponent },
+      { path: "track/:id", component: TrackingPageComponent },
+      { path: "gha", component: GhaUpdatePageComponent }
+
     ])
   ],
   declarations: [
     AppComponent,
-    ProductListComponent,
     TopBarComponent,
     BookingFormComponent,
+    GhaUpdatePageComponent,
+    TrackingPageComponent,
+    SuccessPageComponent,
+
   ],
   bootstrap: [AppComponent],
   providers: []

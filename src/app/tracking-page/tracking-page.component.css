@@ -1,0 +1,68 @@
+.footer-note {
+  font-size: 13px;
+  font-style: italic;
+  margin-left: 20px;
+  color: #7c848a;
+  opacity: 100%;
+}
+.header-card {
+  color: #002244;
+  font-size: 18px;
+  font-family: "Open Sans", Semibold;
+  background: #ffffff;
+  margin: 10px 20px;
+}
+.track-card {
+  border: #d4d4d5 1px;
+  /* background: #f5f5f5; */
+  margin: 30px 0 30px 0;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  color: #002244;
+  padding: 20px;
+  margin: 0px 20px;
+  border: #e3edf7 solid 0.5px;
+}
+i.icon-blue {
+  color: blue;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.round {
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  background: #06217c;
+  margin: 0px;
+  padding: 0px;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 10px;
+}
+.line {
+  border-top: 2px solid #009cde;
+  width: 100px;
+  margin-right: 3px;
+  margin-left: 3px;
+}
+.dash-line {
+  border-top: 1.5px dashed #009cde;
+  width: 100px;
+  margin-right: 3px;
+  margin-left: 3px;
+}
+.inv-line {
+  width: 120px;
+  margin-right: 3px;
+  margin-left: 3px;
+  border-top: 2px solid white;
+}
+.mvt {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,180 +1,259 @@
-<div *ngIf="!post; else forminfo" novalidate>
+<div *ngIf="!post" novalidate>
   <mat-card>
     <mat-card-content>
-      Are the Pets travelling with you?
-      <mat-radio-group aria-label="Select an option">
-        <mat-radio-button value="Y">Yes</mat-radio-button>
-        <mat-radio-button value="N">No</mat-radio-button>
-      </mat-radio-group>
-      <mat-label
-        >Reservation Number of your Passenger Ticket (Optional)</mat-label
-      >
-      <input type="text" [(ngModel)]="pnr" />
-      <button mat-raised-button color="primary" (click)="getPNR()">
-        Fetch Reservation
-      </button>
-    </mat-card-content>
-  </mat-card>
-  <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
-    <div>
-      <mat-tab-group>
-        <mat-tab label="Flight Details">
-          <div formGroupName="flight" noValidate>
-            <div>
-              <mat-form-field>
-                <input
-                  matInput
-                  platholder="carrier"
-                  formControlName="carrier"
-                />
-              </mat-form-field>
-              <mat-form-field>
-                <input matInput placeholder="number" formControlName="number" />
-              </mat-form-field>
-              <mat-form-field>
-                <input matInput placeholder="suffix" formControlName="suffix" />
-              </mat-form-field>
-            </div>
-            <div>
-              <mat-form-field>
-                <input matInput placeholder="date" formControlName="date" />
-              </mat-form-field>
-            </div>
-            <div>
-              <div formGroupName="from" noValidate>
-                <mat-form-field>
-                  <input matInput placeholder="From" formControlName="code" />
+      <div class="reservation">
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            #message
+            maxlength="256"
+            placeholder="Reservation number"
+            [(ngModel)]="pnr"
+          />
+          <mat-hint align="start">
+            <p style="color:#7C848A;font-size: 14px;font-style: italic">
+              If you are travelling with pet the servation number
+            </p>
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input
+            matInput
+            #message
+            maxlength="256"
+            placeholder=" Pet Name"
+            [(ngModel)]="name"
+          />
+          <mat-hint align="start"
+            ><p style="color:#7C848A;font-size: 14px;font-style: italic">
+              Your pet name
+            </p>
+          </mat-hint>
+        </mat-form-field>
+
+        <div>
+          <button
+            type="button"
+            mat-raised-button
+            color="primary"
+            (click)="fileInput.click()"
+          >
+            Choose Your Pet
+          </button>
+          <input
+            hidden
+            (change)="onFileSelected($event)"
+            #fileInput
+            type="file"
+            id="file"
+          />
+        </div>
+      </div>
+      <mat-spinner
+        [mode]="spinnermode"
+        *ngIf="enableSpinner && !this.booking.Pet.breed"
+      ></mat-spinner>
+      <mat-divider *ngIf="this.booking.Pet.breed"></mat-divider>
+      <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+        <div *ngIf="this.booking.Pet.breed">
+          <div>
+            <div formGroupName="Pet" class="pet-details" noValidate>
+              <div formGroupName="age" noValidate>
+                <mat-form-field class="age-weight">
+                  <input matInput placeholder="Yrs" formControlName="years" />
+                  <mat-hint align="start">
+                    <p style="color:#7C848A;font-size: 14px;font-style: italic">
+                      Age of pet
+                    </p>
+                  </mat-hint>
+                </mat-form-field>
+                <mat-form-field class="age-weight">
+                  <input
+                    matInput
+                    placeholder="months"
+                    formControlName="months"
+                  />
                 </mat-form-field>
               </div>
-              <div formGroupName="to" noValidate>
-                <mat-form-field>
-                  <input matInput placeholder="To" formControlName="code" />
+
+              <div formGroupName="weight" noValidate>
+                <mat-form-field class="age-weight">
+                  <mat-label>Weight</mat-label>
+                  <input matInput formControlName="value" />
+                </mat-form-field>
+                <mat-form-field class="age-weight">
+                  <mat-select formControlName="code">
+                    <mat-option value="K">Kgs</mat-option>
+                    <mat-option value="L">Lbs</mat-option>
+                  </mat-select>
                 </mat-form-field>
               </div>
-            </div>
-          </div>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
-    <div>
-      <mat-tab-group>
-        <mat-tab label="Pet Details">
-          <div formGroupName="pet" noValidate>
-            <mat-form-field>
-              <input matInput placeholder="Name" formControlName="name" />
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="Bread" formControlName="bread" />
-            </mat-form-field>
-            <div formGroupName="age" noValidate>
-              <mat-form-field>
-                <input matInput placeholder="Yrs" formControlName="years" />
-              </mat-form-field>
-              <mat-form-field>
-                <input matInput placeholder="months" formControlName="months" />
-              </mat-form-field>
             </div>
 
-            <div formGroupName="weight" noValidate>
-              <mat-form-field>
-                <mat-label>Weight</mat-label>
-                <input matInput formControlName="value" />
-              </mat-form-field>
-              <mat-form-field>
-                <mat-select formControlName="code">
-                  <mat-option value="K">Kgs</mat-option>
-                  <mat-option value="L">Lbs</mat-option>
+            <div class="create-card">
+              <mat-form-field class="example-full-width">
+                <mat-label>Create</mat-label>
+                <mat-select formControlName="CreateType">
+                  <mat-option
+                    *ngFor="let create of createTypes"
+                    [value]="create.value"
+                  >
+                    {{ create.viewValue }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
           </div>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
-    <div>
-      <mat-tab-group>
-        <mat-tab label="Create Details">
-          <div formGroupName="dimensions" noValidate></div>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
 
-    <!-- <mat-form-field>
-      <input matInput placeholder="Emailaddress" formControlName="email" />
-      <mat-error
-        *ngIf="
-          !formGroup.controls['email'].valid &&
-          formGroup.controls['email'].touched
-        "
-      >
-        {{ getErrorEmail() }}
-      </mat-error>
-    </mat-form-field>
-  -->
-    <!-- <mat-form-field>
-      <input matInput placeholder="Name" formControlName="name" />
-      <mat-error *ngIf="!name.valid && name.touched">
-        {{ titleAlert }}
-      </mat-error>
-    </mat-form-field>
+          <mat-divider></mat-divider>
+          <div formGroupName="Services" noValidate>
+            <div class="services-card">
+              <mat-checkbox class="example-margin" formControlName="feeding">
+                Feeding
+              </mat-checkbox>
+              <mat-checkbox
+                class="example-margin"
+                formControlName="temperature"
+              >
+                Temperature Monitoring
+              </mat-checkbox>
+              <mat-checkbox class="example-margin" formControlName="insurance">
+                Insurance
+              </mat-checkbox>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
 
-    <mat-form-field>
-      <textarea
-        matInput
-        placeholder="Description"
-        matTextareaAutosize
-        matAutosizeMinRows="2"
-        matAutosizeMaxRows="5"
-        formControlName="description"
-      ></textarea>
-      <mat-error
-        *ngIf="
-          !formGroup.controls['description'].valid &&
-          formGroup.controls['description'].touched
-        "
-      >
-        Required field, must be between 5 and 10 characters.
-      </mat-error>
-    </mat-form-field>
+          <div class="section">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              class="button"
+              [disabled]="!formGroup.valid"
+            >
+              Request Booking
+            </button>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="cards">
+          <mat-card class="image-card">
+            <mat-card-header>
+              <mat-card-title class="flight-header" *ngIf="booking.Pet.breed">{{
+                name
+              }}</mat-card-title>
+              <mat-card-title *ngIf="booking.Pet.breed">
+                <mat-chip-list>
+                  <mat-chip selected>{{
+                    booking.Pet.breed | uppercase
+                  }}</mat-chip>
+                </mat-chip-list>
+              </mat-card-title>
+            </mat-card-header>
 
-    <mat-form-field>
-      <input matInput placeholder="Password" formControlName="password" />
-      <mat-hint
-        >Choose a password of at least eight characters, one uppercase letter
-        and one number</mat-hint
-      >
-      <mat-error
-        *ngIf="
-          !formGroup.controls['password'].valid &&
-          formGroup.controls['password'].touched
-        "
-      >
-        {{ getErrorPassword() }}
-      </mat-error>
-    </mat-form-field>
+            <img
+              mat-card-image
+              class="image-holder"
+              [src]="url"
+              alt="pet image"
+            />
+          </mat-card>
+          <mat-card class="card" *ngIf="booking.Flight.to.code">
+            <mat-card-header class="flight-card">
+              <mat-card-title class="flight-header"
+                >23 Jun, 2019 , Sunday</mat-card-title
+              >
+              <mat-card-subtitle>
+                <div
+                  class="flight-number"
+                  style="    font-size: 20px;
+                color: darkblue;
+                font-weight: bolder;
+                text-align: center;
+                background: white;"
+                >
+                  AA &nbsp;6134
+                </div></mat-card-subtitle
+              >
+              <mat-card-title
+                style="display: flex;flex-direction: row;justify-content: space-between"
+              >
+                <mat-chip-list
+                  ><mat-basic-chip style="padding-left: 10px;">
+                    London
+                  </mat-basic-chip></mat-chip-list
+                >
+                <div
+                  style="max-width: 100%;
+                max-height: 100%;"
+                >
+                  <img
+                    style="width: 38px;
+                  align-self: center;
+                  align-items: center;
+                  align-content: center;"
+                    src="/assets/AA.PNG"
+                  />
+                </div>
+                <mat-chip-list
+                  ><mat-basic-chip style="padding-left: 10px;">
+                    New York
+                  </mat-basic-chip></mat-chip-list
+                >
+              </mat-card-title>
 
-    <div>
-      <mat-checkbox formControlName="validate" value="1"
-        >Name min. 3 characters</mat-checkbox
-      >
-    </div>  -->
-
-    <div>
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        class="button"
-        [disabled]="!formGroup.valid"
-      >
-        Request Booking
-      </button>
-    </div>
-  </form>
+              <mat-card-title
+                style="display: flex;flex-direction: row;justify-content: space-between"
+              >
+                <mat-chip-list>
+                  <mat-chip> &nbsp;LHR &nbsp;</mat-chip>
+                </mat-chip-list>
+                <hr style="border: darkblue dashed 1px;width: 50px" />
+                <mat-chip-list>
+                  <mat-chip> &nbsp;JFK &nbsp;</mat-chip>
+                </mat-chip-list>
+              </mat-card-title>
+              <mat-card-title
+                style="display: flex;flex-direction: row;justify-content: space-between"
+              >
+                <mat-chip-list>
+                  <mat-basic-chip
+                    style="color: darkblue;
+                  padding-left: 15px;"
+                    >16:15</mat-basic-chip
+                  >
+                </mat-chip-list>
+                <mat-chip-list>
+                  <mat-basic-chip
+                    style="color: darkblue;
+                  padding-right: 15px;"
+                    >19:15</mat-basic-chip
+                  >
+                </mat-chip-list>
+              </mat-card-title>
+            </mat-card-header>
+          </mat-card>
+          <mat-card class="card" *ngIf="booking.Flight.to.code">
+            <mat-card-header>
+              <mat-card-title class="flight-header">
+                <p
+                  style="font-size: 20px;
+                margin-bottom: 0px;
+                padding: 0 30px 0 30px"
+                >
+                  Traveller Info
+                </p></mat-card-title
+              >
+              <mat-card-title> Mr. Hellen, Petteri </mat-card-title>
+              <mat-card-subtitle>
+                petteri.hellen@finnair.com
+              </mat-card-subtitle>
+              <mat-card-title>+358503935410</mat-card-title>
+            </mat-card-header>
+          </mat-card>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>
-
-<ng-template #forminfo>
-  <div>
-    {{ booking | json }}
-  </div>
-</ng-template>
