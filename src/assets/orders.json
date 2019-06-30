@@ -77,7 +77,7 @@
             "distance": null,
             "duration": "PT8H0M",
             "marketing_carrier": {
-              "iata_code": "AA",
+              "iata_code": "XX",
               "id": "arl_00009VME7DAGiJjwomhv32",
               "name": "American Airlines"
             },
