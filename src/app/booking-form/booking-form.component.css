@@ -1,12 +1,33 @@
-.example-full-width {
-  width: 80%;
-  margin-left: 20px;
-  margin-right: 20px;
+.form {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  font-size: 14px;
+  font-family: 'Open Sans';
 }
-.age-weight {
-  margin-left: 20px;
-  margin-right: 20px;
+
+.row {
+  width: 100%;
+  margin: 20px;
+  display: flex;
+  justify-content: start;
 }
+
+.column {
+  margin-left: 40px;
+  margin-right: 40px;
+  font-size: 14px;
+}
+
+input {
+  font-size: 12px;
+}
+
+.crate {
+  width: 51vw;
+}
+
 .reservation {
   display: flex;
   flex-direction: row;
@@ -23,21 +44,25 @@
   padding-bottom: 20px;
   padding-top: 20px;
 }
+
 .card {
   margin-left: 20px;
   /* width: 300px; */
   /* height: 250px; */
 }
+
 .image-card {
   margin-right: 20px;
   width: 350px;
 }
+
 .flight-card {
   border-radius: 1px;
 }
+
 .image-holder {
-  height: 200px;
-  max-height: 150px;
+  /* height: 200px; */
+  /* max-height: 150px; */
   align-content: center;
 }
 
@@ -49,20 +74,22 @@
   /* margin-top: 10px; */
   /* padding-left: 10px; */
 }
+
 .flight-number {
   font-size: 20px;
   color: #0b1d58;
   /* padding-left: px; */
   /* color: chocolate; */
 }
+
 .od {
   display: flex;
   justify-content: space-between;
-
   font-weight: bold;
   padding-left: 10px;
   color: #003399;
 }
+
 .pet-details {
   display: flex;
   flex-direction: row;
@@ -70,6 +97,7 @@
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
 .services-card {
   display: flex;
   flex-direction: row;
@@ -77,6 +105,7 @@
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
 .section {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -89,4 +118,8 @@
 
 .carrier {
   background-image: url("/assets/AA.PNG");
+}
+
+.button {
+  margin: 20px;
 }

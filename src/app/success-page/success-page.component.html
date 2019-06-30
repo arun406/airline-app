@@ -1,6 +1,6 @@
-<mat-card>
+
   <mat-card-content class="success">
-    <h3>You booking created sucessfully!!</h3>
+    <h5>{{message}}</h5>
   </mat-card-content>
   <div class="section">
     <button
@@ -8,9 +8,8 @@
       color="primary"
       type="submit"
       class="button"
-      (click)="trackBooking(1234)"
+      (click)="trackBooking()"
     >
       Track Your Booking
     </button>
   </div>
-</mat-card>

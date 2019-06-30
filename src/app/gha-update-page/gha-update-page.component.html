@@ -1,3 +1,87 @@
-<p>
-  gha-update-page works!
-</p>
+<div>
+  <app-loader></app-loader>
+  <div class="section">
+    <div class="search">
+      <mat-form-field class="seach-field">
+        <input matInput #message maxlength="256" placeholder="Booking reference number" [(ngModel)]="orderId" />
+        <mat-hint align="start">
+          <p style="color:#7C848A;font-size: 12px;font-style: italic">
+            Please enter booking reservation number
+          </p>
+        </mat-hint>
+      </mat-form-field>
+      <button type="button" mat-raised-button color="primary" (click)="getBooking()">
+        View Booking
+      </button>
+    </div>
+    <div class="column" *ngIf="booking">
+      <h5 class="title"> Pet Details </h5>
+      <div class="column">
+        <app-pet-details [pet]="booking.pet" [documents]="booking.documentList" *ngIf="booking.pet"></app-pet-details>
+      </div>
+      <h6 class="title"> Services </h6>
+      <div class="column">
+        <app-services [services]="booking.services" *ngIf="booking.services"></app-services>
+      </div>
+      <h5 class="title"> Passenger Details </h5>
+      <div class="column">
+        <app-passenger [passenger]="booking.passenger" *ngIf="booking.passenger"></app-passenger>
+      </div>
+
+      <h5 class="title">Flight Details </h5>
+      <div class="column">
+        <app-flight [flight]="booking.flight" *ngIf="booking.flight"></app-flight>
+      </div>
+
+      <h5 class="title"> Movement Details </h5>
+      <div class="column">
+        <app-track [status]="booking.steps"></app-track>
+      </div>
+    </div>
+
+    <h5 class="title"> Update Status </h5>
+    <div class="form">
+      <div class="row">
+        <mat-form-field class="column">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="form.statusCode" name="status">
+            <mat-option *ngFor="let status of statusList" [(value)]="status">
+              {{status.description}}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="start">
+            <p style="color:#7C848A;font-size: 12px;font-style: italic">
+              Select status
+            </p>
+          </mat-hint>
+        </mat-form-field>
+        <mat-checkbox [(ngModel)]="form.completed"> Completed
+        </mat-checkbox>
+      </div>
+      <div class="row">
+        <mat-form-field class="remarks">
+          <textarea matInput [(ngModel)]="form.remarks"></textarea>
+          <mat-hint align="start">
+            <p style="color:#7C848A;font-size: 12px;font-style: italic">
+              Enter remarks
+            </p>
+          </mat-hint>
+        </mat-form-field>
+
+        <mat-label class="date"> {{ timestamp| date:'short'}}</mat-label>
+      </div>
+      <div class="row">
+        <div class="column">
+          <input mat-raised-button type="file" id="file" (change)="handleFileInput($event)" multiple />
+        </div>
+      </div>
+      <div class="row">
+        <div class="column">
+          <button type="button" mat-raised-button color="primary" (click)="updateStatus()">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

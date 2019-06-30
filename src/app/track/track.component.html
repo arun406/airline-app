@@ -1,0 +1,57 @@
+<div>
+  <mat-chip-list aria-label="tracking status" class="steps">
+    <div
+      *ngFor="let step of steps"
+      class="step"
+      [matTooltipPosition]="'above'"
+      matTooltipClass="example-tooltip-red"
+      matTooltip="{{ step.description }}"
+    >
+      <div class="step-icon" [ngStyle]="{'margin-top': (step.media && step.media.length != 0) ? '69px': '0px'}">
+        <mat-icon
+          class="doc-icon"
+          *ngIf="step.documents && step.documents.length != 0; else temp"
+          matBadge="{{ step.documents.length }}"
+          matBadgeColor="primary"
+          (click)="openDialog(step,'d')"
+          >attachment</mat-icon
+        >
+        <ng-template #temp>
+          <mat-icon class="doc-icon">&nbsp;</mat-icon>
+        </ng-template>
+        <div
+          style="display: flex;
+        flex-direction: column;"
+        >
+          <fa-icon
+            icon="{{ step.stepIcon }}"
+            size="2x"
+            [ngStyle]="{ color: getColor(step) }"
+          >
+          </fa-icon>
+          <mat-chip [selected]="false" style="margin-left: -15px;">
+            <span class="step-description">{{ step.code }} </span>
+          </mat-chip>
+        </div>
+        <mat-icon
+          class="media-icon"
+          *ngIf="step.media && step.media.length != 0"
+          matBadge="{{ step.media.length }}"
+          matBadgeColor="primary"
+          (click)="openDialog(step,'i')"
+          >photo</mat-icon
+        >
+      </div>
+
+      <div class="step-devider">
+        <hr class="line" *ngIf="isVisible(step)" />
+        <fa-icon
+          class="arrow"
+          icon="play"
+          [ngStyle]="{ color: '#003399' }"
+          size="1x"
+        ></fa-icon>
+      </div>
+    </div>
+  </mat-chip-list>
+</div>

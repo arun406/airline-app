@@ -1,0 +1,82 @@
+<mat-card class="card" *ngIf="flight">
+  <mat-card-header class="flight-card">
+    <mat-card-title class="flight-header">
+      {{ flight.date | date: "dd MMM, yyyy, EEEE" }}
+    </mat-card-title>
+    <mat-card-subtitle>
+      <div
+        class="flight-number"
+        style="    font-size: 20px;
+            color: darkblue;
+            font-weight: bolder;
+            text-align: center;
+            background: white;"
+      >
+        {{ flight.carrier }} &nbsp; {{ flight.number }}
+      </div></mat-card-subtitle
+    >
+    <mat-card-title
+      style="display: flex;flex-direction: row;justify-content: space-between"
+    >
+      <mat-chip-list
+        ><mat-basic-chip style="padding-left: 10px; font-family: 'Open Sans';">
+          {{ flight.from.name }}
+        </mat-basic-chip></mat-chip-list
+      >
+      <div
+        style="max-width: 100%;
+            max-height: 100%;"
+      >
+        <img
+          style="width: 38px;
+              align-self: center;
+              align-items: center;
+              align-content: center;"
+          src="/assets/AA.PNG"
+        />
+      </div>
+      <mat-chip-list
+        ><mat-basic-chip style="padding-left: 10px; font-family: 'Open Sans';">
+          {{ flight.to.name }}
+        </mat-basic-chip></mat-chip-list
+      >
+    </mat-card-title>
+
+    <mat-card-title
+      style="display: flex;flex-direction: row;justify-content: space-between; font-family: 'Open Sans';"
+    >
+      <mat-chip-list>
+        <mat-chip> &nbsp; {{ flight.from.code }} &nbsp;</mat-chip>
+      </mat-chip-list>
+      <hr style="border: darkblue dashed 1px;width: 50px; font-family: 'Open Sans';" />
+      <mat-chip-list>
+        <mat-chip> &nbsp; {{ flight.to.code }} &nbsp;</mat-chip>
+      </mat-chip-list>
+    </mat-card-title>
+    <mat-card-title
+      style="display: flex;flex-direction: row;justify-content: space-between"
+    >
+      <mat-chip-list>
+        <mat-basic-chip
+          style="color: darkblue;
+              padding-left: 15px;
+              font-size: 12px;
+              font-family: 'Open Sans';"
+        >
+          {{ flight.date | date: "HH:MM" }}</mat-basic-chip
+        >
+      </mat-chip-list>
+      <mat-chip-list>
+        <mat-basic-chip
+          style="color: darkblue;
+              padding-right: 15px;
+              font-size: 12px;
+              font-family: 'Open Sans';"
+          >{{
+            flight.arrival_date | date: "HH:MM"
+          }}</mat-basic-chip
+        >
+      </mat-chip-list>
+    </mat-card-title>
+  </mat-card-header>
+</mat-card>

@@ -1,0 +1,70 @@
+.step-devider {
+  margin-right: 3px;
+  margin-left: 3px;
+  margin-top: 25px;
+  /* margin-bottom: 60px; */
+  display: flex;
+  flex-direction: row;
+  /* width: 100px; */
+}
+.line {
+  border-top: 1px dotted #003399;
+  width: 60px;
+
+}
+.arrow {
+  margin-top: 5px;
+  margin-right: 10px;
+}
+.steps {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: #002244;
+  padding: 5px;
+  /* border: 1px solid rgb(201, 221, 238); */
+  /* border-radius: 1px; */
+}
+.step {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: #002244;
+  /* padding-left: 0px; */
+  /* padding-right: 20px; */
+  /* margin-bottom: 60px; */
+  /* margin-top: 60px; */
+  align-items: center;
+}
+.step-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* border: 1px dashed saddlebrown; */
+  /* width: 76px; */
+  /* height: 238px; */
+  align-items: flex-end;
+}
+.step-description {
+  font-size: 0.6rem;
+  color: #003399;
+  font-style: italic;
+  font-weight: 400;
+  padding-top: 3px;
+}
+
+.tracking {
+  display: flex;
+  flex-direction: column;
+}
+.doc-icon {
+  /* margin-bottom: 25px; */
+  margin-left: 25px;
+  margin-bottom: 40px;
+}
+
+.media-icon {
+  /* margin-top: 25px; */
+  margin-left: 25px;
+  margin-top: 40px;
+}

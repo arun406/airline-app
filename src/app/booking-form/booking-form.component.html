@@ -1,153 +1,134 @@
-<div *ngIf="!post" novalidate>
-  <mat-card>
-    <mat-card-content>
-      <div class="reservation">
-        <mat-form-field class="example-full-width">
-          <input
-            matInput
-            #message
-            maxlength="256"
-            placeholder="Reservation number"
-            [(ngModel)]="pnr"
-          />
-          <mat-hint align="start">
-            <p style="color:#7C848A;font-size: 14px;font-style: italic">
-              If you are travelling with pet the servation number
-            </p>
-          </mat-hint>
-        </mat-form-field>
-        <mat-form-field class="example-full-width">
-          <input
-            matInput
-            #message
-            maxlength="256"
-            placeholder=" Pet Name"
-            [(ngModel)]="name"
-          />
-          <mat-hint align="start"
-            ><p style="color:#7C848A;font-size: 14px;font-style: italic">
-              Your pet name
-            </p>
-          </mat-hint>
-        </mat-form-field>
-
-        <div>
-          <button
-            type="button"
-            mat-raised-button
-            color="primary"
-            (click)="fileInput.click()"
-          >
-            Choose Your Pet
-          </button>
-          <input
-            hidden
-            (change)="onFileSelected($event)"
-            #fileInput
-            type="file"
-            id="file"
-          />
-        </div>
-      </div>
-      <mat-spinner
-        [mode]="spinnermode"
-        *ngIf="enableSpinner && !this.booking.Pet.breed"
-      ></mat-spinner>
-      <mat-divider *ngIf="this.booking.Pet.breed"></mat-divider>
-      <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
-        <div *ngIf="this.booking.Pet.breed">
-          <div>
-            <div formGroupName="Pet" class="pet-details" noValidate>
-              <div formGroupName="age" noValidate>
-                <mat-form-field class="age-weight">
-                  <input matInput placeholder="Yrs" formControlName="years" />
-                  <mat-hint align="start">
-                    <p style="color:#7C848A;font-size: 14px;font-style: italic">
-                      Age of pet
-                    </p>
-                  </mat-hint>
-                </mat-form-field>
-                <mat-form-field class="age-weight">
-                  <input
-                    matInput
-                    placeholder="months"
-                    formControlName="months"
-                  />
-                </mat-form-field>
-              </div>
-
-              <div formGroupName="weight" noValidate>
-                <mat-form-field class="age-weight">
-                  <mat-label>Weight</mat-label>
-                  <input matInput formControlName="value" />
-                </mat-form-field>
-                <mat-form-field class="age-weight">
-                  <mat-select formControlName="code">
-                    <mat-option value="K">Kgs</mat-option>
-                    <mat-option value="L">Lbs</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </div>
-
-            <div class="create-card">
-              <mat-form-field class="example-full-width">
-                <mat-label>Create</mat-label>
-                <mat-select formControlName="CreateType">
-                  <mat-option
-                    *ngFor="let create of createTypes"
-                    [value]="create.value"
-                  >
-                    {{ create.viewValue }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-
-          <mat-divider></mat-divider>
-          <div formGroupName="Services" noValidate>
-            <div class="services-card">
-              <mat-checkbox class="example-margin" formControlName="feeding">
-                Feeding
-              </mat-checkbox>
-              <mat-checkbox
-                class="example-margin"
-                formControlName="temperature"
+<div>
+    <mat-card>
+      <mat-card-content>
+        <div class="form">
+          <app-loader></app-loader>
+          <div class="row">
+            <mat-form-field class="column">
+              <input
+                matInput
+                #message
+                maxlength="256"
+                placeholder="PNR / Booking reference number"
+                [(ngModel)]="form.passenger.pnr"
+              />
+              <mat-hint align="start">
+                <p style="color:#7C848A;font-size: 11px;font-style: italic">
+                  Please enter passenger reservation number
+                </p>
+              </mat-hint>
+            </mat-form-field>
+            <mat-form-field class="column">
+              <input
+                matInput
+                #message
+                maxlength="256"
+                placeholder="Mobile Number"
+                [(ngModel)]="form.passenger.phone"
+              />
+              <mat-hint align="start">
+                <p style="color:#7C848A;font-size: 11px;font-style: italic">
+                  Please enter your mobile number
+                </p>
+              </mat-hint>
+            </mat-form-field>
+            <mat-form-field class="column">
+              <input
+                matInput
+                #message
+                maxlength="256"
+                placeholder=" Pet Name"
+                [(ngModel)]="form.pet.name"
+              />
+              <mat-hint align="start"
+                ><p style="color:#7C848A;font-size: 11px;font-style: italic">
+                  Name of your pet
+                </p>
+              </mat-hint>
+            </mat-form-field>
+            <div class="column">
+              <button
+                type="button"
+                mat-raised-button
+                color="primary"
+                (click)="fileInput.click()"
               >
-                Temperature Monitoring
-              </mat-checkbox>
-              <mat-checkbox class="example-margin" formControlName="insurance">
-                Insurance
-              </mat-checkbox>
+                Choose Your Pet
+              </button>
+              <input
+                hidden
+                (change)="onFileSelected($event)"
+                #fileInput
+                type="file"
+                id="file"
+              />
             </div>
           </div>
-          <mat-divider></mat-divider>
+          <div class="row">
+            <mat-form-field class="column">
+              <input
+                matInput
+                placeholder="Years"
+                [(ngModel)]="form.pet.age.years"
+              />
+              <mat-hint align="start">
+                <p style="color:#7C848A;font-size: 11px;font-style: italic">
+                  Age of pet
+                </p>
+              </mat-hint>
+            </mat-form-field>
+            <mat-form-field class="column">
+              <input
+                matInput
+                placeholder="months"
+                [(ngModel)]="form.pet.age.months"
+              />
+            </mat-form-field>
 
-          <div class="section">
-            <button
-              mat-raised-button
-              color="primary"
-              type="submit"
-              class="button"
-              [disabled]="!formGroup.valid"
-            >
-              Request Booking
-            </button>
+            <mat-form-field class="column">
+              <mat-label>Weight</mat-label>
+              <input
+                matInput
+                [(ngModel)]="form.pet.weight.value"
+                (change)="setCrate()"
+              />
+              <mat-hint align="start">
+                <p style="color:#7C848A;font-size: 11px;font-style: italic">
+                  Weight of the pet
+                </p>
+              </mat-hint>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select [(ngModel)]="form.pet.weight.code">
+                <mat-option value="K">Kgs</mat-option>
+                <mat-option value="L">Lbs</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="column crate">
+              <mat-label>Crate</mat-label>
+              <input
+                matInput
+                placeholder="Crate"
+                [(ngModel)]="form.pet.crateType"
+              />
+            </mat-form-field>
           </div>
         </div>
-        <mat-divider></mat-divider>
-        <div class="cards">
-          <mat-card class="image-card">
+
+        <div class="row">
+          <mat-divider></mat-divider>
+        </div>
+        <div class="row">
+          <mat-card class="image-card" *ngIf="form.pet.breed">
             <mat-card-header>
-              <mat-card-title class="flight-header" *ngIf="booking.Pet.breed">{{
-                name
-              }}</mat-card-title>
-              <mat-card-title *ngIf="booking.Pet.breed">
+              <mat-card-title class="flight-header">
+                {{ form.pet.name | uppercase }}
+              </mat-card-title>
+              <mat-card-title>
                 <mat-chip-list>
-                  <mat-chip selected>{{
-                    booking.Pet.breed | uppercase
-                  }}</mat-chip>
+                  <mat-chip selected>{{ form.pet.breed | uppercase }}</mat-chip>
                 </mat-chip-list>
               </mat-card-title>
             </mat-card-header>
@@ -159,21 +140,21 @@
               alt="pet image"
             />
           </mat-card>
-          <mat-card class="card" *ngIf="booking.Flight.to.code">
+          <!-- <mat-card class="card" *ngIf="form.flight.number">
             <mat-card-header class="flight-card">
-              <mat-card-title class="flight-header"
-                >23 Jun, 2019 , Sunday</mat-card-title
-              >
+              <mat-card-title class="flight-header">
+                {{ form.flight.date | date: "dd MMM, yyyy, EEEE" }}
+              </mat-card-title>
               <mat-card-subtitle>
                 <div
                   class="flight-number"
                   style="    font-size: 20px;
-                color: darkblue;
-                font-weight: bolder;
-                text-align: center;
-                background: white;"
+                      color: darkblue;
+                      font-weight: bolder;
+                      text-align: center;
+                      background: white;"
                 >
-                  AA &nbsp;6134
+                  {{ form.flight.carrier }} &nbsp; {{ form.flight.number }}
                 </div></mat-card-subtitle
               >
               <mat-card-title
@@ -181,24 +162,24 @@
               >
                 <mat-chip-list
                   ><mat-basic-chip style="padding-left: 10px;">
-                    London
+                    {{ form.flight.from.name }}
                   </mat-basic-chip></mat-chip-list
                 >
                 <div
                   style="max-width: 100%;
-                max-height: 100%;"
+                      max-height: 100%;"
                 >
                   <img
                     style="width: 38px;
-                  align-self: center;
-                  align-items: center;
-                  align-content: center;"
+                        align-self: center;
+                        align-items: center;
+                        align-content: center;"
                     src="/assets/AA.PNG"
                   />
                 </div>
                 <mat-chip-list
                   ><mat-basic-chip style="padding-left: 10px;">
-                    New York
+                    {{ form.flight.to.name }}
                   </mat-basic-chip></mat-chip-list
                 >
               </mat-card-title>
@@ -207,11 +188,11 @@
                 style="display: flex;flex-direction: row;justify-content: space-between"
               >
                 <mat-chip-list>
-                  <mat-chip> &nbsp;LHR &nbsp;</mat-chip>
+                  <mat-chip> &nbsp; {{ form.flight.from.code }} &nbsp;</mat-chip>
                 </mat-chip-list>
                 <hr style="border: darkblue dashed 1px;width: 50px" />
                 <mat-chip-list>
-                  <mat-chip> &nbsp;JFK &nbsp;</mat-chip>
+                  <mat-chip> &nbsp; {{ form.flight.to.code }} &nbsp;</mat-chip>
                 </mat-chip-list>
               </mat-card-title>
               <mat-card-title
@@ -220,40 +201,96 @@
                 <mat-chip-list>
                   <mat-basic-chip
                     style="color: darkblue;
-                  padding-left: 15px;"
-                    >16:15</mat-basic-chip
+                        padding-left: 15px;"
+                  >
+                    {{ form.flight.date | date: "HH:MM" }}</mat-basic-chip
                   >
                 </mat-chip-list>
                 <mat-chip-list>
                   <mat-basic-chip
                     style="color: darkblue;
-                  padding-right: 15px;"
-                    >19:15</mat-basic-chip
+                        padding-right: 15px;"
+                    >{{
+                      form.flight.arrival_date | date: "HH:MM"
+                    }}</mat-basic-chip
                   >
                 </mat-chip-list>
               </mat-card-title>
             </mat-card-header>
-          </mat-card>
-          <mat-card class="card" *ngIf="booking.Flight.to.code">
+          </mat-card> -->
+          <app-flight [flight]="form.flight" *ngIf="form.flight.number" ></app-flight>
+          <app-passenger [passenger]="form.passenger" *ngIf="form.passenger.pnr" style="margin-left: 20px;"></app-passenger>
+          <!-- <mat-card class="card" *ngIf="form.flight.number">
             <mat-card-header>
               <mat-card-title class="flight-header">
                 <p
                   style="font-size: 20px;
-                margin-bottom: 0px;
-                padding: 0 30px 0 30px"
+                      margin-bottom: 0px;
+                      padding: 0 30px 0 30px"
                 >
                   Traveller Info
                 </p></mat-card-title
               >
-              <mat-card-title> Mr. Hellen, Petteri </mat-card-title>
+              <mat-card-title> {{ form.passenger.name }}</mat-card-title>
               <mat-card-subtitle>
-                petteri.hellen@finnair.com
+                {{ form.passenger.email }}
               </mat-card-subtitle>
-              <mat-card-title>+358503935410</mat-card-title>
+              <mat-card-title>{{ form.passenger.phone }}</mat-card-title>
             </mat-card-header>
-          </mat-card>
+          </mat-card> -->
         </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
-</div>
+        <div class="row">
+          <mat-divider></mat-divider>
+        </div>
+        <div class="row">
+          <div class="column">
+            <mat-checkbox
+              class="example-margin"
+              [(ngModel)]="form.services.feeding"
+            >
+              Feeding Service
+            </mat-checkbox>
+          </div>
+          <div class="column">
+            <mat-checkbox
+              class="example-margin"
+              [(ngModel)]="form.services.temperatureTracking"
+            >
+              Temperature Tracking
+            </mat-checkbox>
+          </div>
+          <div class="column">
+            <mat-checkbox
+              class="example-margin"
+              [(ngModel)]="form.services.travelInsurance"
+            >
+              Travel Insurance
+            </mat-checkbox>
+          </div>
+        </div>
+        <div class="row">
+          <mat-divider></mat-divider>
+        </div>
+        <div class="row">
+          <div class="column">
+            <input
+              mat-raised-button
+              type="file"
+              id="file"
+              (change)="handleFileInput($event.target.files)"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="onSubmit()"
+            class="column"
+          >
+            Request Booking
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>

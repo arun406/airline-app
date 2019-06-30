@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>
+  Click
+  <fa-icon icon="download" size="1x" [ngStyle]="{ color: '#009CDE' }">
+  </fa-icon>
+  to download the document.
+</h1>
+<div mat-dialog-content>
+  <mat-nav-list>
+    <mat-list-item *ngFor="let link of documents" class="document-link">
+      <h5 matLine>{{ link.name }}</h5>
+      <button mat-flat-button (click)="download(link)">
+        <fa-icon icon="download" size="1x" [ngStyle]="{ color: '#009CDE' }">
+        </fa-icon>
+      </button>
+    </mat-list-item>
+  </mat-nav-list>
+</div>
+<div mat-dialog-actions>
+  <button color="primary" mat-flat-button (click)="onNoClick()">Close</button>
+</div>

@@ -1,0 +1,218 @@
+<!-- <ul>
+  <li><fa-icon icon="coffee" size="3x"></fa-icon></li>
+  <li><fa-icon icon="check"></fa-icon></li>
+  <li><fa-icon icon="spinner" spin="true" size="3x"></fa-icon></li>
+  <li><fa-icon icon="envelope" rotate="90"></fa-icon></li>
+</ul> -->
+
+<div>
+  <mat-card class="track-card">
+    <mat-card-header class="header-card">
+      <mat-card-title>Your Order : </mat-card-title>
+      <mat-card-title> {{booking.id}}</mat-card-title> 
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <div class="row">
+        <div>
+          <mat-label style="font-size: 20px !important;">
+            {{booking.Flight.from.name}}  &nbsp;( {{booking.Flight.from.code}})</mat-label>
+        </div>
+        <div>
+          <mat-label>
+            <i class="material-icons">
+              play_arrow
+            </i>
+          </mat-label>
+        </div>
+        <div>
+          <mat-label style="font-size: 20px !important;">{{booking.Flight.to.name}}  &nbsp;( {{booking.Flight.to.code}})</mat-label>
+        </div>
+      </div>
+      <div>
+        <mat-label style="color: #62A9E3; margin-left:20px;"
+          >{{booking.Flight.date | date:'medium'}}</mat-label
+        >
+      </div>
+      <div class="row">
+        <div>
+          <mat-label style="font-size: 20px !important;">{{booking.Pet.name}}</mat-label>
+        </div>
+        <div>
+          <mat-label style="font-size: 20px !important;">{{booking.Pet.type}}</mat-label>
+        </div>
+        <div>
+          <mat-label style="font-size: 20px !important;"
+            >{{booking.Pet.weight.value}} ({{booking.Pet.weight.code}})</mat-label
+          >
+        </div>
+        <div>
+          <mat-label style="font-size: 20px !important;"
+            >Age: {{booking.Pet.age.years}}  years ({{booking.Pet.age.months}} months)  </mat-label
+          >
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-footer>
+      <span>
+        <p class="footer-note">
+          The PetSafe base rate displayed here does not include taxes, fees or
+          other charges that may be incurred
+        </p>
+      </span>
+    </mat-card-footer>
+  </mat-card>
+  <mat-card class="track-card">
+    <mat-card-content>
+      <div class="row">
+        <div>
+          <!-- Upper Layer -->
+          <mat-chip-list aria-label="tracking status" class="mvt">
+            <mat-basic-chip [selected]="flags.ordered"> </mat-basic-chip>
+            <fa-icon
+              style="margin-left:20px; margin-bottom:25px;"
+              icon="images"
+              size="1x"
+            ></fa-icon>
+            <!-- <mat-chip style="margin-bottom:25px;">hello world </mat-chip> -->
+            <hr class="inv-line" />
+            <mat-basic-chip [selected]="flags.confirmed"></mat-basic-chip>
+            <!-- <fa-icon
+              style=" margin-bottom:25px;"
+              icon="images"
+              size="1x"
+            ></fa-icon> -->
+            <hr class="inv-line" />
+
+            <mat-basic-chip [selected]="flags.confirmed"></mat-basic-chip>
+            <fa-icon
+              style="margin-bottom:25px;"
+              icon="images"
+              size="1x"
+            ></fa-icon>
+            <!-- <mat-chip style="margin-bottom:25px;">hello world </mat-chip> -->
+            <hr class="inv-line" />
+            <mat-basic-chip [selected]="flags.documented"></mat-basic-chip>
+
+            <mat-basic-chip [selected]="flags.accepted"></mat-basic-chip>
+            <fa-icon
+              style=" margin-bottom:25px;"
+              icon="bone"
+              size="1x"
+            ></fa-icon>
+            <hr class="inv-line" />
+
+            <mat-basic-chip [selected]="flags.boarded"></mat-basic-chip>
+            <hr class="inv-line" />
+
+            <mat-basic-chip [selected]="flags.departed"></mat-basic-chip>
+            <hr class="inv-line" />
+
+            <mat-basic-chip [selected]="flags.departed"></mat-basic-chip>
+          </mat-chip-list>
+
+          <!-- Main Layer -->
+          <mat-chip-list aria-label="tracking status" class="mvt">
+            
+            <mat-basic-chip [selected]="flags.ordered"> </mat-basic-chip>
+            <fa-icon icon="calendar-check" size="2x" 
+            [ngStyle]="{'color': 'green'}"
+            ></fa-icon>  
+            <!-- BKGCFM -->
+            <hr class="line" />
+
+            <!-- <i class="fa fa-check" [ngStyle]="{'color': 'green'}"> 
+            </i> -->
+
+            <mat-basic-chip [selected]="flags.confirmed"></mat-basic-chip>  
+            <!-- DOCACC -->
+            <fa-icon icon="copy" size="2x"></fa-icon>
+            <hr class="line" />
+
+
+            <mat-basic-chip [selected]="flags.confirmed"></mat-basic-chip> 
+            <fa-icon icon="people-carry" size="2x"></fa-icon>
+            <!-- TENDER -->
+            <hr class="line" />
+
+
+            <mat-basic-chip [selected]="flags.documented"></mat-basic-chip>
+            <fa-icon icon="clipboard-list" size="2x"></fa-icon>
+            <!-- ANCTMP,ANCFED -->
+            <hr class="line" />
+
+
+            <mat-basic-chip [selected]="flags.accepted"></mat-basic-chip>
+            <fa-icon icon="shuttle-van" size="2x"></fa-icon>
+            <!-- MFST -->
+            <hr class="line" />
+
+
+            <mat-basic-chip [selected]="flags.boarded"></mat-basic-chip>
+            <fa-icon icon="plane-departure" size="2x"></fa-icon>
+            <!-- FLTDEP -->
+            <hr class="dash-line" />
+          </mat-chip-list>
+
+          <!-- Bottom -->
+          <mat-chip-list aria-label="tracking status" class="mvt">
+            <mat-basic-chip [selected]="flags.ordered"> </mat-basic-chip>
+            <fa-icon
+              style="margin-left:20px;margin-top:25px;"
+              icon="paperclip"
+              size="1x"
+            ></fa-icon>
+            <hr class="inv-line" />
+
+            <mat-basic-chip [selected]="flags.confirmed"></mat-basic-chip>
+            <!-- <fa-icon
+              style="margin-top:25px;"
+              icon="paperclip"
+              size="1x"
+            ></fa-icon> -->
+            <hr class="inv-line" />
+            <mat-basic-chip [selected]="flags.documented"></mat-basic-chip>
+            <fa-icon
+              style="margin-top:25px;"
+              icon="temperature-high"
+              size="1x"
+            ></fa-icon>
+            <hr class="inv-line" />
+
+            <mat-basic-chip [selected]="flags.accepted"></mat-basic-chip>
+            <fa-icon
+              style="margin-top:25px;"
+              icon="temperature-high"
+              size="1x"
+            ></fa-icon>
+            <hr class="inv-line" />
+
+            <mat-basic-chip [selected]="flags.boarded"></mat-basic-chip>
+            <hr class="inv-line" />
+
+            <mat-basic-chip [selected]="flags.departed"></mat-basic-chip>
+            <hr class="inv-line" />
+
+            <mat-basic-chip [selected]="flags.departed"></mat-basic-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="track-card">
+    <mat-card-content>
+      <div class="row">
+        <div *ngFor="let doc of booking.DocumentList">
+          <!-- {{ doc }} -->
+          <a [href]="doc" download
+            ><fa-icon
+              style="margin-left:20px;margin-top:25px;"
+              icon="image"
+              size="2x"
+            ></fa-icon
+          > </a>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

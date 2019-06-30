@@ -1,191 +1,44 @@
-<!-- <ul>
-  <li><fa-icon icon="coffee" size="3x"></fa-icon></li>
-  <li><fa-icon icon="check"></fa-icon></li>
-  <li><fa-icon icon="spinner" spin="true" size="3x"></fa-icon></li>
-  <li><fa-icon icon="envelope" rotate="90"></fa-icon></li>
-</ul> -->
-
 <div>
-  <mat-card class="track-card">
-    <mat-card-header class="header-card">
-      <mat-card-title>Your Order </mat-card-title>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content>
-      <div class="row">
-        <div>
-          <mat-label style="font-size: 20px !important;"
-            >San Francisco (SFO)</mat-label
-          >
-        </div>
-        <div>
-          <mat-label>
-            <i class="material-icons">
-              play_arrow
-            </i>
-          </mat-label>
-        </div>
-        <div>
-          <mat-label style="font-size: 20px !important;">Dubai (DXB)</mat-label>
-        </div>
+  <app-loader></app-loader>
+  <div class="section">
+    <div class="search">
+      <mat-form-field class="seach-field">
+        <input matInput #message maxlength="256" placeholder="Booking reference number" [(ngModel)]="orderId" />
+        <mat-hint align="start">
+          <p style="color:#7C848A;font-size: 12px;font-style: italic">
+            Please enter booking reservation number
+          </p>
+        </mat-hint>
+      </mat-form-field>
+      <button type="button" mat-raised-button color="primary" (click)="getBooking()">
+        View Booking
+      </button>
+    </div>
+    <div class="column" *ngIf="booking">
+      <h5 class="title"> Pet Details </h5>
+      <div class="column">
+        <app-pet-details [pet]="booking.pet" [documents]="booking.documentList" *ngIf="booking.pet"></app-pet-details>
+
       </div>
-      <div>
-        <mat-label style="color: #62A9E3; margin-left:20px;"
-          >Wednesday, 30 May 2017</mat-label
-        >
+      <h6 class="title"> Services </h6>
+      <div class="column">
+        <app-services [services]="booking.services" *ngIf="booking.services"></app-services>
       </div>
-      <div class="row">
-        <div>
-          <mat-label style="font-size: 20px !important;">Bella</mat-label>
-        </div>
-        <div>
-          <mat-label style="font-size: 20px !important;">Dog</mat-label>
-        </div>
-        <div>
-          <mat-label style="font-size: 20px !important;"
-            >154.00 Kg ( 339.512 lb)</mat-label
-          >
-        </div>
-        <div>
-          <mat-label style="font-size: 20px !important;"
-            >400 Series Crate</mat-label
-          >
-        </div>
+      <h5 class="title"> Passenger Details </h5>
+      <div class="column">
+        <app-passenger [passenger]="booking.passenger" *ngIf="booking.passenger"></app-passenger>
       </div>
-    </mat-card-content>
-    <mat-card-footer>
-      <span>
-        <p class="footer-note">
-          The PetSafe base rate displayed here does not include taxes, fees or
-          other charges that may be incurred
-        </p>
-      </span>
-    </mat-card-footer>
-  </mat-card>
-  <mat-card class="track-card">
-    <mat-card-content>
-      <div class="row">
-        <div>
-          <!-- Upper Layer -->
-          <mat-chip-list aria-label="tracking status" class="mvt">
-            <mat-basic-chip [selected]="flags.ordered"> </mat-basic-chip>
-            <fa-icon
-              style="margin-left:20px; margin-bottom:25px;"
-              icon="images"
-              size="1x"
-            ></fa-icon>
-            <!-- <mat-chip style="margin-bottom:25px;">hello world </mat-chip> -->
-            <hr class="inv-line" />
-            <mat-basic-chip [selected]="flags.confirmed"></mat-basic-chip>
-            <!-- <fa-icon
-              style=" margin-bottom:25px;"
-              icon="images"
-              size="1x"
-            ></fa-icon> -->
-            <hr class="inv-line" />
 
-            <mat-basic-chip [selected]="flags.confirmed"></mat-basic-chip>
-            <fa-icon
-              style="margin-bottom:25px;"
-              icon="images"
-              size="1x"
-            ></fa-icon>
-            <!-- <mat-chip style="margin-bottom:25px;">hello world </mat-chip> -->
-            <hr class="inv-line" />
-            <mat-basic-chip [selected]="flags.documented"></mat-basic-chip>
-
-            <mat-basic-chip [selected]="flags.accepted"></mat-basic-chip>
-            <fa-icon
-              style=" margin-bottom:25px;"
-              icon="bone"
-              size="1x"
-            ></fa-icon>
-            <hr class="inv-line" />
-
-            <mat-basic-chip [selected]="flags.boarded"></mat-basic-chip>
-            <hr class="inv-line" />
-
-            <mat-basic-chip [selected]="flags.departed"></mat-basic-chip>
-            <hr class="inv-line" />
-
-            <mat-basic-chip [selected]="flags.departed"></mat-basic-chip>
-          </mat-chip-list>
-
-          <!-- Main Layer -->
-          <mat-chip-list aria-label="tracking status" class="mvt">
-            <mat-basic-chip [selected]="flags.ordered"> </mat-basic-chip>
-            <fa-icon icon="calendar-check" size="2x"></fa-icon>
-            <hr class="line" />
-
-            <mat-basic-chip [selected]="flags.confirmed"></mat-basic-chip>
-            <fa-icon icon="copy" size="2x"></fa-icon>
-            <hr class="line" />
-            <mat-basic-chip [selected]="flags.confirmed"></mat-basic-chip>
-            <fa-icon icon="people-carry" size="2x"></fa-icon>
-            <hr class="line" />
-            <mat-basic-chip [selected]="flags.documented"></mat-basic-chip>
-            <fa-icon icon="clipboard-list" size="2x"></fa-icon>
-            <hr class="line" />
-            <mat-basic-chip [selected]="flags.accepted"></mat-basic-chip>
-            <fa-icon icon="shuttle-van" size="2x"></fa-icon>
-            <hr class="line" />
-            <mat-basic-chip [selected]="flags.boarded"></mat-basic-chip>
-            <fa-icon icon="plane-departure" size="2x"></fa-icon>
-            <hr class="dash-line" />
-          </mat-chip-list>
-
-          <!-- Bottom -->
-          <mat-chip-list aria-label="tracking status" class="mvt">
-            <mat-basic-chip [selected]="flags.ordered"> </mat-basic-chip>
-            <fa-icon
-              style="margin-left:20px;margin-top:25px;"
-              icon="paperclip"
-              size="1x"
-            ></fa-icon>
-            <hr class="inv-line" />
-
-            <mat-basic-chip [selected]="flags.confirmed"></mat-basic-chip>
-            <!-- <fa-icon
-              style="margin-top:25px;"
-              icon="paperclip"
-              size="1x"
-            ></fa-icon> -->
-            <hr class="inv-line" />
-            <mat-basic-chip [selected]="flags.documented"></mat-basic-chip>
-            <fa-icon
-              style="margin-top:25px;"
-              icon="temperature-high"
-              size="1x"
-            ></fa-icon>
-            <hr class="inv-line" />
-
-            <mat-basic-chip [selected]="flags.accepted"></mat-basic-chip>
-            <fa-icon
-              style="margin-top:25px;"
-              icon="temperature-high"
-              size="1x"
-            ></fa-icon>
-            <hr class="inv-line" />
-
-            <mat-basic-chip [selected]="flags.boarded"></mat-basic-chip>
-            <hr class="inv-line" />
-
-            <mat-basic-chip [selected]="flags.departed"></mat-basic-chip>
-            <hr class="inv-line" />
-
-            <mat-basic-chip [selected]="flags.departed"></mat-basic-chip>
-          </mat-chip-list>
-        </div>
+      <h5 class="title">Flight Details </h5>
+      <div class="column">
+        <app-flight [flight]="booking.flight" *ngIf="booking.flight"></app-flight>
       </div>
-    </mat-card-content>
-  </mat-card>
-  <mat-card class="track-card">
-    <mat-card-content>
-      <div class="row">
-        <div *ngFor="let doc of booking.DocumentList">
-          <!-- {{ doc }} -->
-        </div>
+
+      <h5 class="title"> Movement Details </h5>
+      <div class="column">
+        <app-track [status]="booking.steps"></app-track>
       </div>
-    </mat-card-content>
-  </mat-card>
+    </div>
+
+  </div>
 </div>

@@ -1,0 +1,26 @@
+<div class="row" *ngIf="services">
+  <div class="column" >
+    <mat-checkbox
+      class="example-margin"
+      [(ngModel)]="services.feeding"
+    >
+      Feeding Service
+    </mat-checkbox>
+  </div>
+  <div class="column">
+    <mat-checkbox
+      class="example-margin"
+      [(ngModel)]="services.temperatureTracking"
+    >
+      Temperature Tracking
+    </mat-checkbox>
+  </div>
+  <div class="column">
+    <mat-checkbox
+      class="example-margin"
+      [(ngModel)]="services.travelInsurance"
+    >
+      Travel Insurance
+    </mat-checkbox>
+  </div>
+</div>

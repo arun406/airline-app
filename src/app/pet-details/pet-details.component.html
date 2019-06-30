@@ -1,0 +1,42 @@
+<div>
+  <div class="container">
+    <div class="label">
+      Name:
+    </div>
+    <div class="value">
+      {{pet.name}}
+    </div>
+    <div class="label">
+      Breed:
+    </div>
+    <div class="value">
+      {{pet.breed}}
+    </div>
+    <div class="label">
+      Age:
+    </div>
+    <div>
+      <div class="value">
+        {{pet.age.years}} yrs
+        {{pet.age.months}} months
+      </div>
+    </div>
+    <div class="label">
+      Weight:
+    </div>
+    <div class="value">
+      {{pet.weight.value}} {{pet.weight.code}}
+    </div>
+    <div class="value">
+      <span> Download attachments</span>
+      <div style="display:flex;">
+        <div class="attachment" *ngFor="let doc of documents">
+          <a [href]="doc.url">
+            <mat-icon>attachment</mat-icon>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

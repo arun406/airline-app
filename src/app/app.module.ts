@@ -1,7 +1,8 @@
+import { BookingService } from './booking.service';
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { ReactiveFormsModule } from "@angular/forms";
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -17,6 +18,16 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { TrackComponent } from './track/track.component';
+import { AttachmentDialogComponent } from './attachment-dialog/attachment-dialog.component';
+import { LoaderComponent } from './loader/loader.component';
+import { PnrService } from "./pnr.service";
+import { LoaderService } from './loader.service';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
+import { PetDetailsComponent } from './pet-details/pet-details.component';
+import { FlightComponent } from './flight/flight.component';
+import { PassengerComponent } from './passenger/passenger.component';
+import { ServicesComponent } from './services/services.component';
 
 library.add(fas);
 
@@ -32,11 +43,12 @@ library.add(fas);
     FontAwesomeModule,
     RouterModule.forRoot([
       { path: "", component: BookingFormComponent },
-      { path: "success/:id", component: SuccessPageComponent },
+      { path: "success", component: SuccessPageComponent },
+      { path: "track", component: TrackComponent },
       { path: "track/:id", component: TrackingPageComponent },
-      { path: "gha", component: GhaUpdatePageComponent }
+      { path: "gha/:id", component: GhaUpdatePageComponent }
 
-    ])
+    ], {useHash: true})
   ],
   declarations: [
     AppComponent,
@@ -45,10 +57,17 @@ library.add(fas);
     GhaUpdatePageComponent,
     TrackingPageComponent,
     SuccessPageComponent,
-
+    TrackComponent,
+    AttachmentDialogComponent,
+    LoaderComponent,
+    PetDetailsComponent,
+    FlightComponent,
+    PassengerComponent,
+    ServicesComponent
   ],
+  entryComponents: [AttachmentDialogComponent],
   bootstrap: [AppComponent],
-  providers: []
+  providers: [PnrService, { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }, BookingService, LoaderService]
 })
 export class AppModule { }
 

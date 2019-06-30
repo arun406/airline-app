@@ -1,59 +1,89 @@
-import { Pet } from './../booking-request';
-import { AppSettings } from './../AppSettings';
+import { Flight, Pet, Airport, Unit, Age } from './../booking-request';
 import { HttpClient } from '@angular/common/http';
-import { BookingService } from './../booking.service';
-import { Booking, Pet, Flight, Dimension, Airport } from 'src/app/booking-request';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Booking } from '../booking-request';
+import { AppSettings } from  '../AppSettings';
 
+
+export interface Status {
+  code: string;
+  description: string;
+  stepIcon: string;
+}
 @Component({
   selector: 'app-tracking-page',
   templateUrl: './tracking-page.component.html',
   styleUrls: ['./tracking-page.component.css']
 })
 export class TrackingPageComponent implements OnInit {
-
-  isLinear = false;
-  booking: Booking;
-  flags = {
-    ordered: true,
-    confirmed: false,
-    documented: false,
-    accepted: false,
-    boarded: false,
-    departed: false
+  statusList: Status[] = [{
+    code: 'BKGCFM',
+    description: 'Confirmation',
+    stepIcon: 'calendar-check'
+  },
+  {
+    code: 'DOCACC',
+    description: 'Document Verification',
+    stepIcon: 'copy'
+  },
+  {
+    code: 'ANCCFM',
+    description: 'Ancillary Confirmation',
+    stepIcon: 'check-circle'
+  },
+  {
+    code: 'DRPREM',
+    description: 'Drop Reminder',
+    stepIcon: 'clock'
+  },
+  {
+    code: 'ANCTMP',
+    description: 'Temperature notification',
+    stepIcon: 'temperature-high'
+  },
+  {
+    code: 'ANCFEED',
+    description: 'Feeding',
+    stepIcon: 'concierge-bell'
+  },
+  {
+    code: 'MFST',
+    description: 'Manifest',
+    stepIcon: 'shuttle-van'
+  },
+  {
+    code: 'FLTDEP',
+    description: 'Departure',
+    stepIcon: 'plane-departure'
   }
-
-
+  ];
   orderId: string = '';
-  constructor(private route: ActivatedRoute, private httpClient: HttpClient) { }
+  booking: Booking;
+
+
+  constructor(private router: Router, private route: ActivatedRoute, private httpClient: HttpClient) { }
 
   ngOnInit() {
-    this.booking = new Booking();
-    this.booking.DocumentList = [];
     this.route.paramMap.subscribe(params => {
       this.orderId = this.route.snapshot.params.id;
       console.log('Order Id : ' + this.orderId);
-      this.httpClient.get(AppSettings.AIRLINE_SERVER + "/" + this.orderId).subscribe(
-        (success) => {
-          console.log(success);
-          this.booking = new Booking();
-          this.booking.Pet = success.logisticsObject.Pet;
-          this.booking.Flight = success.logisticsObject.Flight;
-          this.booking.Flight.from = new Airport();
-          this.booking.Flight.to = new Airport();
-          this.booking.Dimensions = new Dimension();
-          this.booking.DocumentList = success.logisticsObject.DocumentList;
-
-          console.log(this.booking);
-        },
-        (error) => { console.log(error); }
-      )
+      if (this.orderId) {
+        this.getBooking();
+      }
     });
+  }
 
-
-
+  public getBooking() {
+    console.log('Order Id : ' + this.orderId);
+    this.httpClient.get(AppSettings.BOOKING_ENDPOINT + "/" + this.orderId).subscribe(
+      (res: Booking) => {
+        const result = res;
+        this.booking = result;
+        console.log(' Booking Fetched : ' + JSON.stringify(this.booking));
+      },
+      (error) => { console.log(error); }
+    );
   }
 
 }

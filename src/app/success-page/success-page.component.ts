@@ -8,17 +8,24 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class SuccessPageComponent implements OnInit {
 
-  loId: string;
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  id: string;
+  message: string;
+  constructor(private router: Router, private route: ActivatedRoute) {
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation.extras.state as { id: string, message: string };
+    this.id = state.id;
+    this.message = state.message;
+  }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.loId = this.route.snapshot.params.id;
-      console.log('Lo Id : ' + this.loId);
-    });
+    // this.route.paramMap.subscribe(params => {
+    //   this.id = this.route.snapshot.params.id;
+    //   console.log('Lo Id : ' + this.id);
+    // });
+
   }
-  trackBooking(loId: string) {
-    this.router.navigate(['track', this.loId])
+  trackBooking() {
+    this.router.navigate(['gha', this.id]);
   }
 
 }
